@@ -1,64 +1,106 @@
 import ply.lex as lex
-
 # List of token names.   This is always required
-# GAONA DEFINICION DE TOKENS PARA POSTERIOR DEFINICION DE REGLAS
+# GAONA Y STEVEN DEFINICION DE TOKENS PARA POSTERIOR DEFINICION DE REGLAS
 reserved = {
     "if": "IF",
     "else": "ELSE",
     "elseif": "ELSEIF",
+    "endif": "ENDIF",
     "while": "WHILE",
+    "endwhile": "ENDWHILE",
     "do": "DO",
     "for": "FOR",
+    "endfor": "ENDFOR",
     "foreach": "FOREACH",
+    "endforeach": "ENDFOREACH",
     "switch": "SWITCH",
     "case": "CASE",
     "default": "DEFAULT",
+    "endswitch": "ENDSWITCH",
     "function": "FUNCTION",
     "class": "CLASS",
+    "interface": "INTERFACE",
+    "trait": "TRAIT",
+    "extends": "EXTENDS",
+    "implements": "IMPLEMENTS",
+    "abstract": "ABSTRACT",
+    "final": "FINAL",
+    "static": "STATIC",
     "public": "PUBLIC",
-    "private": "PRIVATE",
     "protected": "PROTECTED",
+    "private": "PRIVATE",
+    "const": "CONST",
     "try": "TRY",
     "catch": "CATCH",
     "finally": "FINALLY",
+    "throw": "THROW",
+    "array": "ARRAY",
+    "callable": "CALLABLE",
+    "bool": "BOOL",
+    "int": "INT",
+    "object": "OBJECT",
+    "void": "VOID",
+    "null": "NULL",
+    "echo": "ECHO",
+    "print": "PRINT",
     "include": "INCLUDE",
     "require": "REQUIRE",
     "include_once": "INCLUDE_ONCE",
     "require_once": "REQUIRE_ONCE",
-    "static": "STATIC",
     "return": "RETURN",
-    "%": "MOD",
-    "&&": "AND",
-    "||": "OR",
-    "!": "NOT"
+    "yield": "YIELD",
+    "list": "LIST",
+    "global": "GLOBAL",
+    "var": "VAR",
+    "unset": "UNSET",
+    "isset": "ISSET",
+    "empty": "EMPTY",
+    "declare": "DECLARE",
+    "namespace": "NAMESPACE",
+    "use": "USE",
+    "as": "AS",
+    "new": "NEW",
+    "clone": "CLONE",
+    "instanceof": "INSTANCEOF",
+    "exit": "EXIT",
+    "die": "DIE",
+    "goto": "GOTO"
 }
 
 # Definición de los tokens, incluyendo las palabras reservadas
 tokens = (
-    'FLOAT',
+    'FLOAT', 
     'INTEGER',
-    'PLUS',
+    'PLUS', 
     'MINUS',
     'STRING',
-    'BOOLEAN',
-    'ARRAY',
-    'OBJECT',
-    'TUPLE',
-    'TIMES',
-    'DIVIDE',
-    'SIMPLE_ASSIGNMENT',
-    'ADDITION_ASSIGNMENT',
-    'SUBTRACTION_ASSIGNMENT',
-    'LPAREN',
-    'RPAREN',
-    'VARIABLE',
-    'COMA',
-    'LCOR',
-    'RCOR',
+    'BOOLEAN', 
+    'TUPLE', 
+    'TIMES', 
+    'DIVIDE', 
+    'SIMPLE_ASSIGNMENT', 
+    'ADDITION_ASSIGNMENT', 
+    'SUBTRACTION_ASSIGNMENT', 
+    'LPAREN', 
+    'RPAREN', 
+    'VARIABLE', 
+    'COMA', 
+    'LCOR', 
+    'RCOR', 
     'LBRACE',
-    'RBRACE',
-    'PUNTOYCOMA',
-    'COMMENT'
+    'RBRACE', 
+    'PUNTOYCOMA', 
+    'SIMPLE_COMMENT',
+    'MULTIPLE_COMMENT',
+# STEVEN INICIO
+    'LT',
+    'GT',
+    'AND',
+    'NOT',
+    'OR',
+    'MOD'
+# STEVEN FIN     
+
 ) + tuple(reserved.values())  # GAONA INICIO DE DEFINICION DE TOKENS
 
 # Regular expression rules for simple tokens
@@ -76,6 +118,16 @@ t_LBRACE = r'\{'
 t_RBRACE = r'\}'
 t_PUNTOYCOMA = r';'
 
+# STEVEN INICIO 
+t_NOT = r'!'
+t_SIMPLE_ASSIGNMENT = r'='
+t_ADDITION_ASSIGNMENT = r'\+='
+t_SUBTRACTION_ASSIGNMENT = r'-='
+
+t_LT = r'<'
+t_GT = r'>'
+# STEVEN FIN
+
 # Expresiones para los operadores compuestos (prioridad alta)
 t_OR = r'\|\|'  # || operador OR
 t_AND = r'&&'   # && operador AND
@@ -91,11 +143,12 @@ def t_RESERVED(t):
 
 def t_STRING(t):
     r'"[^\n]*"'  # Expresión regular corregida para cadenas
-    t.value = t.value[1:-1]  # Eliminar las comillas
+    t.value = t.value[1:-1]  # Eliminar las comillas    
     return t
 
 def t_VARIABLE(t):
     r'\$[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*'  # Expresión regular corregida para variables
+    # r'\$[a-zA-Z_][a-zA-Z_0-9]*'   CREO QUE DEBERIA SER ASI        
     t.type = reserved.get(t.value, 'VARIABLE')  # Si es palabra reservada, asigna el tipo adecuado
     return t
 
@@ -120,7 +173,7 @@ def t_newline(t):
     t.lexer.lineno += len(t.value)
 
 # Ignorar espacios y saltos de línea
-t_ignore = r' \t\n'
+t_ignore = ' \t\n'
 
 # Error handling rule
 def t_error(t):
@@ -128,18 +181,56 @@ def t_error(t):
     t.lexer.skip(1)
 # GAONA FIN
 
+# STEVEN INICIO  
+# Ignorar comentarios de una línea (// o #) y comentarios de múltiples líneas (/* ... */)
+def t_SIMPLE_COMMENT(t):
+    r'//.*|\#.*'
+    pass  # Ignorar los comentarios
+    if t.value.startswith("//"):
+        t.value = t.value[2:].strip()  # Elimina '//' y los espacios en blanco al inicio y al final
+    elif t.value.startswith("#"):
+        t.value = t.value[1:].strip()  # Elimina '#' y los espacios en blanco al inicio y al final
+    return t
+
+def t_MULTIPLE_COMMENT(t):
+    r'/\*[\s\S]*?\*/'
+    pass  # Ignorar los comentarios 
+    t.value = t.value.replace('\n', ' ').replace('\r', ' ')  # Reemplaza los saltos de línea con espacios
+    t.value = t.value[2:-2].strip()  # Devuelve el token del comentario múltiple sin '/*    */'
+    return t
+
+def t_TUPLE(t):
+    r'\(.*?\)'  # Captura contenido entre paréntesis
+    return t
+
+
+# STEVEN FIN  
 
 # Construir el lexer
 lexer = lex.lex()
 
 # Test it out
-data = '''
+
+
+data2 = '''
+"SOY STEVEN" #TENGO 24
 3 + 4 * 10 if || % &&
   + -20 *2 3.5 2 {} , ; $hola "HOla" 4%5
+// hola 
+ #hola
+/*
+125 hola
+*/
+/*23 holsf
+fdfh
+hfdhf*/
+/* 25 */
+t=25
+
 '''
 
 # Darle al lexer una entrada
-lexer.input(data)
+lexer.input(data2)
 
 # Tokenizar
 while True:
