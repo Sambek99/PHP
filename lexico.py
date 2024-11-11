@@ -281,7 +281,7 @@ while True:
 
 # generar el archivo de log
 
-usuario_git = "Sambek"  # <---- Cambiar este usuario    
+usuario_git = "Stejmuri"  # <---- Cambiar este usuario    
 fecha_hora = time.strftime("%d%m%Y-%Hh%M")
 log_filename = f"lexico-{usuario_git}-{fecha_hora}.txt"
 
@@ -294,7 +294,7 @@ os.makedirs(algoritmos_directory, exist_ok=True)  # Crea la carpeta "algoritmos"
 os.makedirs(logs_directory, exist_ok=True)        # Crea la carpeta "logs" si no existe
 
 # Ruta del archivo de prueba en la carpeta "algoritmos"
-algoritmo_filepath = os.path.join(algoritmos_directory, "algoritmo2.php") # <----- cambiar por el archivo a probar
+algoritmo_filepath = os.path.join(algoritmos_directory, "algoritmo3.php") # <----- cambiar por el archivo a probar
 
 # El archivo de prueba debe estar ya creado en la carpeta "algoritmos"
 
