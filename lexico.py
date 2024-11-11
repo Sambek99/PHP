@@ -1,4 +1,7 @@
 import ply.lex as lex
+import time
+import os
+
 # List of token names.   This is always required
 # GAONA Y STEVEN DEFINICION DE TOKENS PARA POSTERIOR DEFINICION DE REGLAS
 reserved = {
@@ -207,7 +210,9 @@ t_ignore = ' \t\n'
 
 # Error handling rule
 def t_error(t):
-    print(f"Illegal character '{t.value[0]}'")  # Manejo de errores más detallado
+    error_message = f"Illegal character '{t.value[0]}' at line {t.lexer.lineno}"
+    lexer.errors.append(error_message)
+    print(error_message)  # Manejo de errores más detallado
     t.lexer.skip(1)
 # GAONA FIN
 
@@ -238,6 +243,7 @@ def t_TUPLE(t):
 
 # Construir el lexer
 lexer = lex.lex()
+lexer.errors = []
 
 # Test it out
 
@@ -270,3 +276,45 @@ while True:
     if not tok:
         break  # No hay más entrada
     print(tok)  # Muestra los tokens
+
+# ARIANA INICIO
+
+# generar el archivo de log
+
+usuario_git = "Aripsaen"  # <---- Cambiar este usuario    
+fecha_hora = time.strftime("%d%m%Y-%Hh%M")
+log_filename = f"lexico-{usuario_git}-{fecha_hora}.txt"
+
+# Creando las carpetas "algoritmos" y "logs" si no existen
+algoritmos_directory = "algoritmos"
+logs_directory = "logs"
+os.makedirs(algoritmos_directory, exist_ok=True)  # Crea la carpeta "algoritmos" si no existe
+os.makedirs(logs_directory, exist_ok=True)        # Crea la carpeta "logs" si no existe
+
+# Ruta del archivo de prueba en la carpeta "algoritmos"
+algoritmo_filepath = os.path.join(algoritmos_directory, "algoritmo1.php") # <----- cambiar por el archivo a probar
+
+# El archivo de prueba debe estar ya creado en la carpeta "algoritmos"
+
+
+# Ruta completa para el archivo de log en la carpeta "logs"
+log_filepath = os.path.join(logs_directory, log_filename)
+
+with open(algoritmo_filepath, "r") as file:
+    data = file.read()
+
+# Genera el log en la carpeta "logs"
+with open(log_filepath, "w") as log_file:
+    lexer.input(data)
+    while True:
+        tok = lexer.token()
+        if not tok:
+            break
+        log_file.write(f"Token: {tok.type}, Valor: {tok.value}, Línea: {tok.lineno}\n")
+
+    # Si hay errores, se escriben en el log
+    if lexer.errors:
+        for error in lexer.errors:
+            log_file.write(f"Error: {error}\n")
+
+# ARIANA FIN
