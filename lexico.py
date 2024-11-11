@@ -98,8 +98,24 @@ tokens = (
     'AND',
     'NOT',
     'OR',
-    'MOD'
-# STEVEN FIN     
+    'MOD',
+# STEVEN FIN  
+# ARIANA INICIO
+    'LE',
+    'GE',
+    'EQ', 
+    'NEQ', 
+    'IDENTICAL', 
+    'NOT_IDENTICAL',
+    'MULTIPLICATION_ASSIGNMENT', 
+    'DIVISION_ASSIGNMENT', 
+    'MOD_ASSIGNMENT',
+    'INCREMENT', 
+    'DECREMENT', 
+    'CONCAT', 
+    'COLON', 
+    'QUESTION'
+# ARIANA FIN   
 
 ) + tuple(reserved.values())  # GAONA INICIO DE DEFINICION DE TOKENS
 
@@ -127,6 +143,20 @@ t_SUBTRACTION_ASSIGNMENT = r'-='
 t_LT = r'<'
 t_GT = r'>'
 # STEVEN FIN
+
+# ARIANA INICIO
+t_EQ = r'=='
+t_NEQ = r'!='
+t_IDENTICAL = r'==='
+t_NOT_IDENTICAL = r'!=='
+t_LE = r'<='
+t_GE = r'>='
+t_INCREMENT = r'\+\+'
+t_DECREMENT = r'--'
+t_CONCAT = r'\.'
+t_COLON = r':'
+t_QUESTION = r'\?'
+# ARIANA FIN
 
 # Expresiones para los operadores compuestos (prioridad alta)
 t_OR = r'\|\|'  # || operador OR
@@ -226,6 +256,8 @@ fdfh
 hfdhf*/
 /* 25 */
 t=25
+1 == 1
+
 
 '''
 
