@@ -1,0 +1,20 @@
+Token: LT, Valor: <, Línea: 14
+Token: QUESTION, Valor: ?, Línea: 14
+Token: VARIABLE, Valor: php, Línea: 14
+Token: VARIABLE, Valor: $suma, Línea: 15
+Token: SIMPLE_ASSIGNMENT, Valor: =, Línea: 15
+Token: INTEGER, Valor: 0, Línea: 15
+Token: PUNTOYCOMA, Valor: ;, Línea: 15
+Token: FOR, Valor: for, Línea: 17
+Token: TUPLE, Valor: ($i = 0; $i <= 20; $i++), Línea: 17
+Token: LBRACE, Valor: {, Línea: 17
+Token: VARIABLE, Valor: $suma, Línea: 18
+Token: ADDITION_ASSIGNMENT, Valor: +=, Línea: 18
+Token: VARIABLE, Valor: $i, Línea: 18
+Token: PUNTOYCOMA, Valor: ;, Línea: 18
+Token: RBRACE, Valor: }, Línea: 19
+Token: ECHO, Valor: echo, Línea: 21
+Token: STRING, Valor: La suma de los números entre 0 y 20 es: $suma, Línea: 21
+Token: PUNTOYCOMA, Valor: ;, Línea: 21
+Token: QUESTION, Valor: ?, Línea: 22
+Token: GT, Valor: >, Línea: 22
