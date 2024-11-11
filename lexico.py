@@ -206,7 +206,7 @@ def t_newline(t):
     t.lexer.lineno += len(t.value)
 
 # Ignorar espacios y saltos de línea
-t_ignore = ' \t\n'
+t_ignore = ' \t'
 
 # Error handling rule
 def t_error(t):
@@ -285,9 +285,11 @@ usuario_git = "Aripsaen"  # <---- Cambiar este usuario
 fecha_hora = time.strftime("%d%m%Y-%Hh%M")
 log_filename = f"lexico-{usuario_git}-{fecha_hora}.txt"
 
+current_directory = os.path.dirname(os.path.abspath(__file__))
+
 # Creando las carpetas "algoritmos" y "logs" si no existen
-algoritmos_directory = "algoritmos"
-logs_directory = "logs"
+algoritmos_directory = os.path.join(current_directory, "algoritmos")
+logs_directory = os.path.join(current_directory, "logs")
 os.makedirs(algoritmos_directory, exist_ok=True)  # Crea la carpeta "algoritmos" si no existe
 os.makedirs(logs_directory, exist_ok=True)        # Crea la carpeta "logs" si no existe
 

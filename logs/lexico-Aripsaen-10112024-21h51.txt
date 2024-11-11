@@ -1,0 +1,47 @@
+Token: LT, Valor: <, Línea: 14
+Token: QUESTION, Valor: ?, Línea: 14
+Token: VARIABLE, Valor: php, Línea: 14
+Token: SIMPLE_COMMENT, Valor: algoritmo1.php, Línea: 15
+Token: MULTIPLE_COMMENT, Valor: Comentario de mÃºltiples lÃ­neas que abarca mÃ¡s de una lÃ­nea, Línea: 16
+Token: FUNCTION, Valor: function, Línea: 18
+Token: VARIABLE, Valor: exampleAlgorithm, Línea: 18
+Token: TUPLE, Valor: ($input), Línea: 18
+Token: LBRACE, Valor: {, Línea: 18
+Token: SIMPLE_COMMENT, Valor: Example algorithm: Calculate the factorial of a number, Línea: 19
+Token: IF, Valor: if, Línea: 20
+Token: TUPLE, Valor: ($input < 0), Línea: 20
+Token: LBRACE, Valor: {, Línea: 20
+Token: RETURN, Valor: return, Línea: 21
+Token: STRING, Valor: Invalid input. Please enter a non-negative integer., Línea: 21
+Token: PUNTOYCOMA, Valor: ;, Línea: 21
+Token: RBRACE, Valor: }, Línea: 22
+Token: VARIABLE, Valor: $factorial, Línea: 24
+Token: SIMPLE_ASSIGNMENT, Valor: =, Línea: 24
+Token: INTEGER, Valor: 1, Línea: 24
+Token: PUNTOYCOMA, Valor: ;, Línea: 24
+Token: FOR, Valor: for, Línea: 25
+Token: TUPLE, Valor: ($i = 1; $i <= $input; $i++), Línea: 25
+Token: LBRACE, Valor: {, Línea: 25
+Token: VARIABLE, Valor: $factorial, Línea: 26
+Token: TIMES, Valor: *, Línea: 26
+Token: SIMPLE_ASSIGNMENT, Valor: =, Línea: 26
+Token: VARIABLE, Valor: $i, Línea: 26
+Token: PUNTOYCOMA, Valor: ;, Línea: 26
+Token: RBRACE, Valor: }, Línea: 27
+Token: RETURN, Valor: return, Línea: 29
+Token: VARIABLE, Valor: $factorial, Línea: 29
+Token: PUNTOYCOMA, Valor: ;, Línea: 29
+Token: RBRACE, Valor: }, Línea: 30
+Token: SIMPLE_COMMENT, Valor: Example usage, Línea: 32
+Token: VARIABLE, Valor: $input, Línea: 33
+Token: SIMPLE_ASSIGNMENT, Valor: =, Línea: 33
+Token: INTEGER, Valor: 5, Línea: 33
+Token: PUNTOYCOMA, Valor: ;, Línea: 33
+Token: ECHO, Valor: echo, Línea: 34
+Token: STRING, Valor: The factorial of $input is , Línea: 34
+Token: CONCAT, Valor: ., Línea: 34
+Token: VARIABLE, Valor: exampleAlgorithm, Línea: 34
+Token: TUPLE, Valor: ($input), Línea: 34
+Token: PUNTOYCOMA, Valor: ;, Línea: 34
+Token: QUESTION, Valor: ?, Línea: 35
+Token: GT, Valor: >, Línea: 35
