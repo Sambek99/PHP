@@ -67,7 +67,9 @@ reserved = {
     "instanceof": "INSTANCEOF",
     "exit": "EXIT",
     "die": "DIE",
-    "goto": "GOTO"
+    "goto": "GOTO",
+    "True" : "TRUE",
+    "False" : "FALSE"
 }
 
 # Definición de los tokens, incluyendo las palabras reservadas
@@ -102,6 +104,9 @@ tokens = (
     'NOT',
     'OR',
     'MOD',
+    'DOLAR',
+    'VERDADERO',
+    'FALSO',
 # STEVEN FIN  
 # ARIANA INICIO
     'LE',
@@ -142,9 +147,11 @@ t_NOT = r'!'
 t_SIMPLE_ASSIGNMENT = r'='
 t_ADDITION_ASSIGNMENT = r'\+='
 t_SUBTRACTION_ASSIGNMENT = r'-='
-
+t_DOLAR = r'\$'
 t_LT = r'<'
 t_GT = r'>'
+t_VERDADERO = r'true'
+t_FALSO = r'false'
 # STEVEN FIN
 
 # ARIANA INICIO
@@ -209,6 +216,7 @@ def t_newline(t):
 t_ignore = ' \t'
 
 # Error handling rule
+
 def t_error(t):
     error_message = f"Illegal character '{t.value[0]}' at line {t.lexer.lineno}"
     lexer.errors.append(error_message)
@@ -244,8 +252,9 @@ def t_TUPLE(t):
 # Construir el lexer
 lexer = lex.lex()
 lexer.errors = []
-
 # Test it out
+
+"""
 
 
 data2 = '''
@@ -267,8 +276,11 @@ t=25
 
 '''
 
+
+
 # Darle al lexer una entrada
 lexer.input(data2)
+
 
 # Tokenizar
 while True:
@@ -276,6 +288,9 @@ while True:
     if not tok:
         break  # No hay más entrada
     print(tok)  # Muestra los tokens
+
+"""
+
 
 # ARIANA INICIO
 
@@ -320,3 +335,5 @@ with open(log_filepath, "w") as log_file:
             log_file.write(f"Error: {error}\n")
 
 # ARIANA FIN
+
+

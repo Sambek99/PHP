@@ -1,0 +1,239 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    ABSTRACT
+    ADDITION_ASSIGNMENT
+    AND
+    ARRAY
+    AS
+    BOOL
+    BOOLEAN
+    CALLABLE
+    CASE
+    CATCH
+    CLASS
+    CLONE
+    COLON
+    COMA
+    CONCAT
+    CONST
+    DECLARE
+    DECREMENT
+    DEFAULT
+    DIE
+    DIVISION_ASSIGNMENT
+    DO
+    ECHO
+    ELSE
+    ELSEIF
+    EMPTY
+    ENDFOR
+    ENDFOREACH
+    ENDIF
+    ENDSWITCH
+    ENDWHILE
+    EQ
+    EXIT
+    EXTENDS
+    FINAL
+    FINALLY
+    FOR
+    FOREACH
+    FUNCTION
+    GE
+    GLOBAL
+    GOTO
+    GT
+    IDENTICAL
+    IF
+    IMPLEMENTS
+    INCLUDE
+    INCLUDE_ONCE
+    INCREMENT
+    INSTANCEOF
+    INT
+    INTERFACE
+    ISSET
+    LBRACE
+    LCOR
+    LE
+    LIST
+    LPAREN
+    LT
+    MOD_ASSIGNMENT
+    MULTIPLE_COMMENT
+    MULTIPLICATION_ASSIGNMENT
+    NAMESPACE
+    NEQ
+    NEW
+    NOT
+    NOT_IDENTICAL
+    NULL
+    OBJECT
+    OR
+    PRINT
+    PRIVATE
+    PROTECTED
+    PUBLIC
+    PUNTOYCOMA
+    QUESTION
+    RBRACE
+    RCOR
+    REQUIRE
+    REQUIRE_ONCE
+    RETURN
+    RPAREN
+    SIMPLE_COMMENT
+    STATIC
+    STRING
+    SUBTRACTION_ASSIGNMENT
+    SWITCH
+    THROW
+    TRAIT
+    TRY
+    TUPLE
+    UNSET
+    USE
+    VAR
+    VOID
+    WHILE
+    YIELD
+
+Grammar
+
+Rule 0     S' -> asignacion
+Rule 1     asignacion -> DOLAR VARIABLE SIMPLE_ASSIGNMENT valor
+Rule 2     asignacion -> DOLAR VARIABLE SIMPLE_ASSIGNMENT operadorAritmetica
+Rule 3     valor -> INTEGER
+Rule 4     valor -> FLOAT
+Rule 5     valor -> VARIABLE
+Rule 6     valor -> VERDADERO
+Rule 7     valor -> FALSO
+Rule 8     valor -> valor operador valor
+Rule 9     operadorAritmetica -> PLUS
+Rule 10    operadorAritmetica -> MINUS
+Rule 11    operadorAritmetica -> TIMES
+Rule 12    operadorAritmetica -> DIVIDE
+Rule 13    operadorAritmetica -> MOD
+
+Terminals, with rules where they appear
+
+ABSTRACT             : 
+ADDITION_ASSIGNMENT  : 
+AND                  : 
+ARRAY                : 
+AS                   : 
+BOOL                 : 
+BOOLEAN              : 
+CALLABLE             : 
+CASE                 : 
+CATCH                : 
+CLASS                : 
+CLONE                : 
+COLON                : 
+COMA                 : 
+CONCAT               : 
+CONST                : 
+DECLARE              : 
+DECREMENT            : 
+DEFAULT              : 
+DIE                  : 
+DIVIDE               : 12
+DIVISION_ASSIGNMENT  : 
+DO                   : 
+DOLAR                : 1 2
+ECHO                 : 
+ELSE                 : 
+ELSEIF               : 
+EMPTY                : 
+ENDFOR               : 
+ENDFOREACH           : 
+ENDIF                : 
+ENDSWITCH            : 
+ENDWHILE             : 
+EQ                   : 
+EXIT                 : 
+EXTENDS              : 
+FINAL                : 
+FINALLY              : 
+FLOAT                : 4
+FOR                  : 
+FOREACH              : 
+FUNCTION             : 
+GE                   : 
+GLOBAL               : 
+GOTO                 : 
+GT                   : 
+IDENTICAL            : 
+IF                   : 
+IMPLEMENTS           : 
+INCLUDE              : 
+INCLUDE_ONCE         : 
+INCREMENT            : 
+INSTANCEOF           : 
+INT                  : 
+INTEGER              : 3
+INTERFACE            : 
+ISSET                : 
+LBRACE               : 
+LCOR                 : 
+LE                   : 
+LIST                 : 
+LPAREN               : 
+LT                   : 
+MINUS                : 10
+MOD                  : 13
+MOD_ASSIGNMENT       : 
+MULTIPLE_COMMENT     : 
+MULTIPLICATION_ASSIGNMENT : 
+NAMESPACE            : 
+NEQ                  : 
+NEW                  : 
+NOT                  : 
+NOT_IDENTICAL        : 
+NULL                 : 
+OBJECT               : 
+OR                   : 
+PLUS                 : 9
+PRINT                : 
+PRIVATE              : 
+PROTECTED            : 
+PUBLIC               : 
+PUNTOYCOMA           : 
+QUESTION             : 
+RBRACE               : 
+RCOR                 : 
+REQUIRE              : 
+REQUIRE_ONCE         : 
+RETURN               : 
+RPAREN               : 
+SIMPLE_ASSIGNMENT    : 1 2
+SIMPLE_COMMENT       : 
+STATIC               : 
+STRING               : 
+SUBTRACTION_ASSIGNMENT : 
+SWITCH               : 
+THROW                : 
+TIMES                : 11
+TRAIT                : 
+TRY                  : 
+TUPLE                : 
+UNSET                : 
+USE                  : 
+VAR                  : 
+VARIABLE             : 1 2 5
+VOID                 : 
+WHILE                : 
+YIELD                : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+FALSO                : 7
+VERDADERO            : 6
+asignacion           : 0
+operador             : 8
+operadorAritmetica   : 2
+valor                : 1 8 8
+
