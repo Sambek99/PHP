@@ -44,7 +44,7 @@ reserved = {
     "object": "OBJECT",
     "void": "VOID",
     "null": "NULL",
-    "echo": "ECHO",
+    "echo" : "ECHO",
     "print": "PRINT",
     "include": "INCLUDE",
     "require": "REQUIRE",
@@ -107,6 +107,7 @@ tokens = (
     'DOLAR',
     'VERDADERO',
     'FALSO',
+    
 # STEVEN FIN  
 # ARIANA INICIO
     'LE',
@@ -152,6 +153,7 @@ t_LT = r'<'
 t_GT = r'>'
 t_VERDADERO = r'true'
 t_FALSO = r'false'
+
 # STEVEN FIN
 
 # ARIANA INICIO
@@ -182,13 +184,13 @@ def t_RESERVED(t):
     return t
 
 def t_STRING(t):
-    r'"[^\n]*"'  # Expresión regular corregida para cadenas
+    r'"[^"\n]*" | \'[^\'\n]*'  # Expresión regular corregida para cadenas
     t.value = t.value[1:-1]  # Eliminar las comillas    
     return t
 
 def t_VARIABLE(t):
-    r'\$[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*'  # Expresión regular corregida para variables
-    # r'\$[a-zA-Z_][a-zA-Z_0-9]*'   CREO QUE DEBERIA SER ASI        
+    # r'\$[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*'  # Expresión regular corregida para variables
+    r'\$[a-zA-Z_][a-zA-Z_0-9]*'         
     t.type = reserved.get(t.value, 'VARIABLE')  # Si es palabra reservada, asigna el tipo adecuado
     return t
 

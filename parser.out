@@ -15,7 +15,6 @@ Unused terminals:
     CLASS
     CLONE
     COLON
-    COMA
     CONCAT
     CONST
     DECLARE
@@ -24,7 +23,6 @@ Unused terminals:
     DIE
     DIVISION_ASSIGNMENT
     DO
-    ECHO
     ELSE
     ELSEIF
     EMPTY
@@ -36,6 +34,7 @@ Unused terminals:
     EQ
     EXIT
     EXTENDS
+    FALSE
     FINAL
     FINALLY
     FOR
@@ -86,11 +85,11 @@ Unused terminals:
     RPAREN
     SIMPLE_COMMENT
     STATIC
-    STRING
     SUBTRACTION_ASSIGNMENT
     SWITCH
     THROW
     TRAIT
+    TRUE
     TRY
     TUPLE
     UNSET
@@ -102,20 +101,30 @@ Unused terminals:
 
 Grammar
 
-Rule 0     S' -> asignacion
-Rule 1     asignacion -> DOLAR VARIABLE SIMPLE_ASSIGNMENT valor
-Rule 2     asignacion -> DOLAR VARIABLE SIMPLE_ASSIGNMENT operadorAritmetica
-Rule 3     valor -> INTEGER
-Rule 4     valor -> FLOAT
-Rule 5     valor -> VARIABLE
-Rule 6     valor -> VERDADERO
-Rule 7     valor -> FALSO
-Rule 8     valor -> valor operador valor
-Rule 9     operadorAritmetica -> PLUS
-Rule 10    operadorAritmetica -> MINUS
-Rule 11    operadorAritmetica -> TIMES
-Rule 12    operadorAritmetica -> DIVIDE
-Rule 13    operadorAritmetica -> MOD
+Rule 0     S' -> imprimir
+Rule 1     imprimir -> impresion
+Rule 2     impresion -> ECHO expresiones
+Rule 3     impresion -> ECHO
+Rule 4     expresiones -> expresion
+Rule 5     expresiones -> expresion COMA expresiones
+Rule 6     expresion -> STRING
+Rule 7     expresion -> INTEGER
+Rule 8     expresion -> FLOAT
+Rule 9     expresion -> VARIABLE
+Rule 10    asignacion -> DOLAR VARIABLE SIMPLE_ASSIGNMENT valor
+Rule 11    asignacion -> DOLAR VARIABLE SIMPLE_ASSIGNMENT valor_bool
+Rule 12    asignacion -> DOLAR VARIABLE SIMPLE_ASSIGNMENT operadorAritmetica
+Rule 13    valor -> INTEGER
+Rule 14    valor -> FLOAT
+Rule 15    valor -> VARIABLE
+Rule 16    valor -> VERDADERO
+Rule 17    valor -> FALSO
+Rule 18    operadorAritmetica -> valor operador valor
+Rule 19    operador -> PLUS
+Rule 20    operador -> MINUS
+Rule 21    operador -> TIMES
+Rule 22    operador -> DIVIDE
+Rule 23    operador -> MOD
 
 Terminals, with rules where they appear
 
@@ -132,18 +141,18 @@ CATCH                :
 CLASS                : 
 CLONE                : 
 COLON                : 
-COMA                 : 
+COMA                 : 5
 CONCAT               : 
 CONST                : 
 DECLARE              : 
 DECREMENT            : 
 DEFAULT              : 
 DIE                  : 
-DIVIDE               : 12
+DIVIDE               : 22
 DIVISION_ASSIGNMENT  : 
 DO                   : 
-DOLAR                : 1 2
-ECHO                 : 
+DOLAR                : 10 11 12
+ECHO                 : 2 3
 ELSE                 : 
 ELSEIF               : 
 EMPTY                : 
@@ -155,9 +164,11 @@ ENDWHILE             :
 EQ                   : 
 EXIT                 : 
 EXTENDS              : 
+FALSE                : 
+FALSO                : 17
 FINAL                : 
 FINALLY              : 
-FLOAT                : 4
+FLOAT                : 8 14
 FOR                  : 
 FOREACH              : 
 FUNCTION             : 
@@ -173,7 +184,7 @@ INCLUDE_ONCE         :
 INCREMENT            : 
 INSTANCEOF           : 
 INT                  : 
-INTEGER              : 3
+INTEGER              : 7 13
 INTERFACE            : 
 ISSET                : 
 LBRACE               : 
@@ -182,8 +193,8 @@ LE                   :
 LIST                 : 
 LPAREN               : 
 LT                   : 
-MINUS                : 10
-MOD                  : 13
+MINUS                : 20
+MOD                  : 23
 MOD_ASSIGNMENT       : 
 MULTIPLE_COMMENT     : 
 MULTIPLICATION_ASSIGNMENT : 
@@ -195,7 +206,7 @@ NOT_IDENTICAL        :
 NULL                 : 
 OBJECT               : 
 OR                   : 
-PLUS                 : 9
+PLUS                 : 19
 PRINT                : 
 PRIVATE              : 
 PROTECTED            : 
@@ -208,21 +219,23 @@ REQUIRE              :
 REQUIRE_ONCE         : 
 RETURN               : 
 RPAREN               : 
-SIMPLE_ASSIGNMENT    : 1 2
+SIMPLE_ASSIGNMENT    : 10 11 12
 SIMPLE_COMMENT       : 
 STATIC               : 
-STRING               : 
+STRING               : 6
 SUBTRACTION_ASSIGNMENT : 
 SWITCH               : 
 THROW                : 
-TIMES                : 11
+TIMES                : 21
 TRAIT                : 
+TRUE                 : 
 TRY                  : 
 TUPLE                : 
 UNSET                : 
 USE                  : 
 VAR                  : 
-VARIABLE             : 1 2 5
+VARIABLE             : 9 10 11 12 15
+VERDADERO            : 16
 VOID                 : 
 WHILE                : 
 YIELD                : 
@@ -230,10 +243,13 @@ error                :
 
 Nonterminals, with rules where they appear
 
-FALSO                : 7
-VERDADERO            : 6
-asignacion           : 0
-operador             : 8
-operadorAritmetica   : 2
-valor                : 1 8 8
+asignacion           : 
+expresion            : 4 5
+expresiones          : 2 5
+impresion            : 1
+imprimir             : 0
+operador             : 18
+operadorAritmetica   : 12
+valor                : 10 18 18
+valor_bool           : 11
 
