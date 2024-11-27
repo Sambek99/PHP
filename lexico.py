@@ -69,7 +69,8 @@ reserved = {
     "die": "DIE",
     "goto": "GOTO",
     "True" : "TRUE",
-    "False" : "FALSE"
+    "False" : "FALSE",
+    "input" : "INPUT"
 }
 
 # Definición de los tokens, incluyendo las palabras reservadas
@@ -124,6 +125,9 @@ tokens = (
     'CONCAT', 
     'COLON', 
     'QUESTION'
+    # 'INPUT',
+    # 'IF',
+    # 'ARRAY'
 # ARIANA FIN   
 
 ) + tuple(reserved.values())  # GAONA INICIO DE DEFINICION DE TOKENS
@@ -209,6 +213,20 @@ def t_BOOLEAN(t):
     t.value = t.value.lower() == 'true'  # Convierte el valor a booleano
     return t
 
+# Token para input
+def t_INPUT(t):
+    r'input'
+    return t
+
+def t_IF(t):
+    r'if'
+    return t
+
+def t_ARRAY(t):
+    r'array'
+    return t
+
+    
 # Define a rule so we can track line numbers
 def t_newline(t):
     r'\n+'
@@ -260,6 +278,8 @@ lexer.errors = []
 
 
 data2 = '''
+$array = array(1, 2, 3);
+
 "SOY STEVEN" #TENGO 24
 3 + 4 * 10 if || % &&
   + -20 *2 3.5 2 {} , ; $hola "HOla" 4%5

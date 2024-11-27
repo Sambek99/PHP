@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'ABSTRACT ADDITION_ASSIGNMENT AND ARRAY AS BOOL BOOLEAN CALLABLE CASE CATCH CLASS CLONE COLON COMA CONCAT CONST DECLARE DECREMENT DEFAULT DIE DIVIDE DIVISION_ASSIGNMENT DO DOLAR ECHO ELSE ELSEIF EMPTY ENDFOR ENDFOREACH ENDIF ENDSWITCH ENDWHILE EQ EXIT EXTENDS FALSE FALSO FINAL FINALLY FLOAT FOR FOREACH FUNCTION GE GLOBAL GOTO GT IDENTICAL IF IMPLEMENTS INCLUDE INCLUDE_ONCE INCREMENT INSTANCEOF INT INTEGER INTERFACE ISSET LBRACE LCOR LE LIST LPAREN LT MINUS MOD MOD_ASSIGNMENT MULTIPLE_COMMENT MULTIPLICATION_ASSIGNMENT NAMESPACE NEQ NEW NOT NOT_IDENTICAL NULL OBJECT OR PLUS PRINT PRIVATE PROTECTED PUBLIC PUNTOYCOMA QUESTION RBRACE RCOR REQUIRE REQUIRE_ONCE RETURN RPAREN SIMPLE_ASSIGNMENT SIMPLE_COMMENT STATIC STRING SUBTRACTION_ASSIGNMENT SWITCH THROW TIMES TRAIT TRUE TRY TUPLE UNSET USE VAR VARIABLE VERDADERO VOID WHILE YIELDimprimir : impresion\n    impresion : ECHO expresiones \n              | ECHO\n    \n    expresiones : expresion \n                | expresion COMA expresiones\n    \n    expresion : STRING\n              | INTEGER \n              | FLOAT\n              | VARIABLE\n    asignacion : DOLAR VARIABLE SIMPLE_ASSIGNMENT valorasignacion : DOLAR VARIABLE SIMPLE_ASSIGNMENT operadorAritmetica\n    valor : INTEGER \n          | FLOAT\n          | VARIABLE \n    \n    valor : VERDADERO\n          | FALSO \n    \n    operadorAritmetica : valor operador valor\n     \n    operador : PLUS \n            | MINUS\n            | TIMES\n            | DIVIDE\n            | MOD \n    '
+_lr_signature = 'ABSTRACT ADDITION_ASSIGNMENT AND ARRAY AS BOOL BOOLEAN CALLABLE CASE CATCH CLASS CLONE COLON COMA CONCAT CONST DECLARE DECREMENT DEFAULT DIE DIVIDE DIVISION_ASSIGNMENT DO DOLAR ECHO ELSE ELSEIF EMPTY ENDFOR ENDFOREACH ENDIF ENDSWITCH ENDWHILE EQ EXIT EXTENDS FALSE FALSO FINAL FINALLY FLOAT FOR FOREACH FUNCTION GE GLOBAL GOTO GT IDENTICAL IF IMPLEMENTS INCLUDE INCLUDE_ONCE INCREMENT INPUT INSTANCEOF INT INTEGER INTERFACE ISSET LBRACE LCOR LE LIST LPAREN LT MINUS MOD MOD_ASSIGNMENT MULTIPLE_COMMENT MULTIPLICATION_ASSIGNMENT NAMESPACE NEQ NEW NOT NOT_IDENTICAL NULL OBJECT OR PLUS PRINT PRIVATE PROTECTED PUBLIC PUNTOYCOMA QUESTION RBRACE RCOR REQUIRE REQUIRE_ONCE RETURN RPAREN SIMPLE_ASSIGNMENT SIMPLE_COMMENT STATIC STRING SUBTRACTION_ASSIGNMENT SWITCH THROW TIMES TRAIT TRUE TRY TUPLE UNSET USE VAR VARIABLE VERDADERO VOID WHILE YIELD\nprograma : statement programa\n         | statement \n\nstatement : asignacion\n          | impresion\n          | expresion_aritmetica\n          | declarar_array\n          \n\nasignacion : VARIABLE SIMPLE_ASSIGNMENT expresion PUNTOYCOMA\n            \n\nimpresion : ECHO expresiones \n          | ECHO\n\nexpresiones : expresion \n            | expresion COMA expresiones\n\nexpresion : STRING\n          | INTEGER \n          | FLOAT\n          | VARIABLE\n          | expresion_aritmetica\n\nexpresion_aritmetica : expresion_aritmetica operador term\n                     | term\n\nterm : term operador factor\n     | factor\n\nfactor : LPAREN expresion_aritmetica RPAREN\n       | INTEGER\n       | FLOAT\n       | VARIABLE\n\noperador : PLUS \n        | MINUS\n        | TIMES\n        | DIVIDE\n        | MOD \n\ndeclarar_array : VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN\n               | VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR\n\nlista_elementos : expresion\n                | expresion COMA lista_elementos\n'
     
-_lr_action_items = {'ECHO':([0,],[3,]),'$end':([1,2,3,4,5,6,7,8,9,11,],[0,-1,-3,-2,-4,-6,-7,-8,-9,-5,]),'STRING':([3,10,],[6,6,]),'INTEGER':([3,10,],[7,7,]),'FLOAT':([3,10,],[8,8,]),'VARIABLE':([3,10,],[9,9,]),'COMA':([5,6,7,8,9,],[10,-6,-7,-8,-9,]),}
+_lr_action_items = {'VARIABLE':([0,2,3,4,5,6,7,8,9,10,11,12,13,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,31,32,35,36,37,38,39,40,43,45,46,47,],[7,7,-3,-4,-5,-6,-24,27,-18,31,-20,-22,-23,31,-25,-26,-27,-28,-29,27,-8,-10,-12,-13,-14,-15,-16,31,-24,-17,27,27,-19,-21,-7,27,-11,-31,27,-30,]),'ECHO':([0,2,3,4,5,6,7,8,9,11,12,13,22,23,24,25,26,27,28,31,32,37,38,39,43,45,47,],[8,8,-3,-4,-5,-6,-24,-9,-18,-20,-22,-23,-8,-10,-12,-13,-14,-15,-16,-24,-17,-19,-21,-7,-11,-31,-30,]),'LPAREN':([0,2,3,4,5,6,7,8,9,10,11,12,13,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,31,32,34,35,36,37,38,39,40,43,45,46,47,],[10,10,-3,-4,-5,-6,-24,10,-18,10,-20,-22,-23,10,-25,-26,-27,-28,-29,10,-8,-10,-12,-13,-14,-15,-16,10,-24,-17,40,10,10,-19,-21,-7,10,-11,-31,10,-30,]),'INTEGER':([0,2,3,4,5,6,7,8,9,10,11,12,13,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,31,32,35,36,37,38,39,40,43,45,46,47,],[12,12,-3,-4,-5,-6,-24,25,-18,12,-20,-22,-23,12,-25,-26,-27,-28,-29,25,-8,-10,-12,-13,-14,-15,-16,12,-24,-17,25,25,-19,-21,-7,25,-11,-31,25,-30,]),'FLOAT':([0,2,3,4,5,6,7,8,9,10,11,12,13,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,31,32,35,36,37,38,39,40,43,45,46,47,],[13,13,-3,-4,-5,-6,-24,26,-18,13,-20,-22,-23,13,-25,-26,-27,-28,-29,26,-8,-10,-12,-13,-14,-15,-16,13,-24,-17,26,26,-19,-21,-7,26,-11,-31,26,-30,]),'$end':([1,2,3,4,5,6,7,8,9,11,12,13,14,22,23,24,25,26,27,28,31,32,37,38,39,43,45,47,],[0,-2,-3,-4,-5,-6,-24,-9,-18,-20,-22,-23,-1,-8,-10,-12,-13,-14,-15,-16,-24,-17,-19,-21,-7,-11,-31,-30,]),'PLUS':([5,7,9,11,12,13,25,26,27,28,30,31,32,37,38,],[16,-24,16,-20,-22,-23,-22,-23,-24,16,16,-24,16,-19,-21,]),'MINUS':([5,7,9,11,12,13,25,26,27,28,30,31,32,37,38,],[17,-24,17,-20,-22,-23,-22,-23,-24,17,17,-24,17,-19,-21,]),'TIMES':([5,7,9,11,12,13,25,26,27,28,30,31,32,37,38,],[18,-24,18,-20,-22,-23,-22,-23,-24,18,18,-24,18,-19,-21,]),'DIVIDE':([5,7,9,11,12,13,25,26,27,28,30,31,32,37,38,],[19,-24,19,-20,-22,-23,-22,-23,-24,19,19,-24,19,-19,-21,]),'MOD':([5,7,9,11,12,13,25,26,27,28,30,31,32,37,38,],[20,-24,20,-20,-22,-23,-22,-23,-24,20,20,-24,20,-19,-21,]),'SIMPLE_ASSIGNMENT':([7,],[21,]),'STRING':([8,21,35,36,40,46,],[24,24,24,24,24,24,]),'COMA':([9,11,12,13,23,24,25,26,27,28,31,32,37,38,42,],[-18,-20,-22,-23,36,-12,-13,-14,-15,-16,-24,-17,-19,-21,46,]),'RPAREN':([9,11,12,13,24,25,26,27,28,30,31,32,37,38,42,44,48,],[-18,-20,-22,-23,-12,-13,-14,-15,-16,38,-24,-17,-19,-21,-32,47,-33,]),'PUNTOYCOMA':([9,11,12,13,24,25,26,27,28,31,32,33,37,38,],[-18,-20,-22,-23,-12,-13,-14,-15,-16,-24,-17,39,-19,-21,]),'RCOR':([9,11,12,13,24,25,26,27,28,31,32,37,38,41,42,48,],[-18,-20,-22,-23,-12,-13,-14,-15,-16,-24,-17,-19,-21,45,-32,-33,]),'ARRAY':([21,],[34,]),'LCOR':([21,],[35,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'imprimir':([0,],[1,]),'impresion':([0,],[2,]),'expresiones':([3,10,],[4,11,]),'expresion':([3,10,],[5,5,]),}
+_lr_goto_items = {'programa':([0,2,],[1,14,]),'statement':([0,2,],[2,2,]),'asignacion':([0,2,],[3,3,]),'impresion':([0,2,],[4,4,]),'expresion_aritmetica':([0,2,8,10,21,35,36,40,46,],[5,5,28,30,28,28,28,28,28,]),'declarar_array':([0,2,],[6,6,]),'term':([0,2,8,10,15,21,35,36,40,46,],[9,9,9,9,32,9,9,9,9,9,]),'factor':([0,2,8,10,15,21,29,35,36,40,46,],[11,11,11,11,11,11,37,11,11,11,11,]),'operador':([5,9,28,30,32,],[15,29,15,15,29,]),'expresiones':([8,36,],[22,43,]),'expresion':([8,21,35,36,40,46,],[23,33,42,23,42,42,]),'lista_elementos':([35,40,46,],[41,44,48,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,27 +26,38 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> imprimir","S'",1,None,None,None),
-  ('imprimir -> impresion','imprimir',1,'p_imprimir','main.py',7),
-  ('impresion -> ECHO expresiones','impresion',2,'p_impresion','main.py',11),
-  ('impresion -> ECHO','impresion',1,'p_impresion','main.py',12),
-  ('expresiones -> expresion','expresiones',1,'p_expresiones','main.py',22),
-  ('expresiones -> expresion COMA expresiones','expresiones',3,'p_expresiones','main.py',23),
-  ('expresion -> STRING','expresion',1,'p_expresion','main.py',34),
-  ('expresion -> INTEGER','expresion',1,'p_expresion','main.py',35),
-  ('expresion -> FLOAT','expresion',1,'p_expresion','main.py',36),
-  ('expresion -> VARIABLE','expresion',1,'p_expresion','main.py',37),
-  ('asignacion -> DOLAR VARIABLE SIMPLE_ASSIGNMENT valor','asignacion',4,'p_asignacion','main.py',53),
-  ('asignacion -> DOLAR VARIABLE SIMPLE_ASSIGNMENT operadorAritmetica','asignacion',4,'p_asignacion_EA','main.py',56),
-  ('valor -> INTEGER','valor',1,'p_valor','main.py',60),
-  ('valor -> FLOAT','valor',1,'p_valor','main.py',61),
-  ('valor -> VARIABLE','valor',1,'p_valor','main.py',62),
-  ('valor -> VERDADERO','valor',1,'p_valor_bool','main.py',67),
-  ('valor -> FALSO','valor',1,'p_valor_bool','main.py',68),
-  ('operadorAritmetica -> valor operador valor','operadorAritmetica',3,'p_operadorAritmetica','main.py',73),
-  ('operador -> PLUS','operador',1,'p_operador','main.py',78),
-  ('operador -> MINUS','operador',1,'p_operador','main.py',79),
-  ('operador -> TIMES','operador',1,'p_operador','main.py',80),
-  ('operador -> DIVIDE','operador',1,'p_operador','main.py',81),
-  ('operador -> MOD','operador',1,'p_operador','main.py',82),
+  ("S' -> programa","S'",1,None,None,None),
+  ('programa -> statement programa','programa',2,'p_programa','main.py',8),
+  ('programa -> statement','programa',1,'p_programa','main.py',9),
+  ('statement -> asignacion','statement',1,'p_statement','main.py',14),
+  ('statement -> impresion','statement',1,'p_statement','main.py',15),
+  ('statement -> expresion_aritmetica','statement',1,'p_statement','main.py',16),
+  ('statement -> declarar_array','statement',1,'p_statement','main.py',17),
+  ('asignacion -> VARIABLE SIMPLE_ASSIGNMENT expresion PUNTOYCOMA','asignacion',4,'p_asignacion','main.py',23),
+  ('impresion -> ECHO expresiones','impresion',2,'p_impresion','main.py',33),
+  ('impresion -> ECHO','impresion',1,'p_impresion','main.py',34),
+  ('expresiones -> expresion','expresiones',1,'p_expresiones','main.py',44),
+  ('expresiones -> expresion COMA expresiones','expresiones',3,'p_expresiones','main.py',45),
+  ('expresion -> STRING','expresion',1,'p_expresion','main.py',56),
+  ('expresion -> INTEGER','expresion',1,'p_expresion','main.py',57),
+  ('expresion -> FLOAT','expresion',1,'p_expresion','main.py',58),
+  ('expresion -> VARIABLE','expresion',1,'p_expresion','main.py',59),
+  ('expresion -> expresion_aritmetica','expresion',1,'p_expresion','main.py',60),
+  ('expresion_aritmetica -> expresion_aritmetica operador term','expresion_aritmetica',3,'p_expresion_aritmetica','main.py',78),
+  ('expresion_aritmetica -> term','expresion_aritmetica',1,'p_expresion_aritmetica','main.py',79),
+  ('term -> term operador factor','term',3,'p_term','main.py',88),
+  ('term -> factor','term',1,'p_term','main.py',89),
+  ('factor -> LPAREN expresion_aritmetica RPAREN','factor',3,'p_factor','main.py',98),
+  ('factor -> INTEGER','factor',1,'p_factor','main.py',99),
+  ('factor -> FLOAT','factor',1,'p_factor','main.py',100),
+  ('factor -> VARIABLE','factor',1,'p_factor','main.py',101),
+  ('operador -> PLUS','operador',1,'p_operador','main.py',118),
+  ('operador -> MINUS','operador',1,'p_operador','main.py',119),
+  ('operador -> TIMES','operador',1,'p_operador','main.py',120),
+  ('operador -> DIVIDE','operador',1,'p_operador','main.py',121),
+  ('operador -> MOD','operador',1,'p_operador','main.py',122),
+  ('declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN','declarar_array',6,'p_declarar_array','main.py',131),
+  ('declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR','declarar_array',5,'p_declarar_array','main.py',132),
+  ('lista_elementos -> expresion','lista_elementos',1,'p_lista_elementos','main.py',141),
+  ('lista_elementos -> expresion COMA lista_elementos','lista_elementos',3,'p_lista_elementos','main.py',142),
 ]

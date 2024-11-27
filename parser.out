@@ -5,7 +5,6 @@ Unused terminals:
     ABSTRACT
     ADDITION_ASSIGNMENT
     AND
-    ARRAY
     AS
     BOOL
     BOOLEAN
@@ -23,6 +22,7 @@ Unused terminals:
     DIE
     DIVISION_ASSIGNMENT
     DO
+    DOLAR
     ELSE
     ELSEIF
     EMPTY
@@ -35,6 +35,7 @@ Unused terminals:
     EXIT
     EXTENDS
     FALSE
+    FALSO
     FINAL
     FINALLY
     FOR
@@ -50,15 +51,14 @@ Unused terminals:
     INCLUDE
     INCLUDE_ONCE
     INCREMENT
+    INPUT
     INSTANCEOF
     INT
     INTERFACE
     ISSET
     LBRACE
-    LCOR
     LE
     LIST
-    LPAREN
     LT
     MOD_ASSIGNMENT
     MULTIPLE_COMMENT
@@ -75,14 +75,11 @@ Unused terminals:
     PRIVATE
     PROTECTED
     PUBLIC
-    PUNTOYCOMA
     QUESTION
     RBRACE
-    RCOR
     REQUIRE
     REQUIRE_ONCE
     RETURN
-    RPAREN
     SIMPLE_COMMENT
     STATIC
     SUBTRACTION_ASSIGNMENT
@@ -95,43 +92,54 @@ Unused terminals:
     UNSET
     USE
     VAR
+    VERDADERO
     VOID
     WHILE
     YIELD
 
 Grammar
 
-Rule 0     S' -> imprimir
-Rule 1     imprimir -> impresion
-Rule 2     impresion -> ECHO expresiones
-Rule 3     impresion -> ECHO
-Rule 4     expresiones -> expresion
-Rule 5     expresiones -> expresion COMA expresiones
-Rule 6     expresion -> STRING
-Rule 7     expresion -> INTEGER
-Rule 8     expresion -> FLOAT
-Rule 9     expresion -> VARIABLE
-Rule 10    asignacion -> DOLAR VARIABLE SIMPLE_ASSIGNMENT valor
-Rule 11    asignacion -> DOLAR VARIABLE SIMPLE_ASSIGNMENT valor_bool
-Rule 12    asignacion -> DOLAR VARIABLE SIMPLE_ASSIGNMENT operadorAritmetica
-Rule 13    valor -> INTEGER
-Rule 14    valor -> FLOAT
-Rule 15    valor -> VARIABLE
-Rule 16    valor -> VERDADERO
-Rule 17    valor -> FALSO
-Rule 18    operadorAritmetica -> valor operador valor
-Rule 19    operador -> PLUS
-Rule 20    operador -> MINUS
-Rule 21    operador -> TIMES
-Rule 22    operador -> DIVIDE
-Rule 23    operador -> MOD
+Rule 0     S' -> programa
+Rule 1     programa -> statement programa
+Rule 2     programa -> statement
+Rule 3     statement -> asignacion
+Rule 4     statement -> impresion
+Rule 5     statement -> expresion_aritmetica
+Rule 6     statement -> declarar_array
+Rule 7     asignacion -> VARIABLE SIMPLE_ASSIGNMENT expresion PUNTOYCOMA
+Rule 8     impresion -> ECHO expresiones
+Rule 9     impresion -> ECHO
+Rule 10    expresiones -> expresion
+Rule 11    expresiones -> expresion COMA expresiones
+Rule 12    expresion -> STRING
+Rule 13    expresion -> INTEGER
+Rule 14    expresion -> FLOAT
+Rule 15    expresion -> VARIABLE
+Rule 16    expresion -> expresion_aritmetica
+Rule 17    expresion_aritmetica -> expresion_aritmetica operador term
+Rule 18    expresion_aritmetica -> term
+Rule 19    term -> term operador factor
+Rule 20    term -> factor
+Rule 21    factor -> LPAREN expresion_aritmetica RPAREN
+Rule 22    factor -> INTEGER
+Rule 23    factor -> FLOAT
+Rule 24    factor -> VARIABLE
+Rule 25    operador -> PLUS
+Rule 26    operador -> MINUS
+Rule 27    operador -> TIMES
+Rule 28    operador -> DIVIDE
+Rule 29    operador -> MOD
+Rule 30    declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN
+Rule 31    declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR
+Rule 32    lista_elementos -> expresion
+Rule 33    lista_elementos -> expresion COMA lista_elementos
 
 Terminals, with rules where they appear
 
 ABSTRACT             : 
 ADDITION_ASSIGNMENT  : 
 AND                  : 
-ARRAY                : 
+ARRAY                : 30
 AS                   : 
 BOOL                 : 
 BOOLEAN              : 
@@ -141,18 +149,18 @@ CATCH                :
 CLASS                : 
 CLONE                : 
 COLON                : 
-COMA                 : 5
+COMA                 : 11 33
 CONCAT               : 
 CONST                : 
 DECLARE              : 
 DECREMENT            : 
 DEFAULT              : 
 DIE                  : 
-DIVIDE               : 22
+DIVIDE               : 28
 DIVISION_ASSIGNMENT  : 
 DO                   : 
-DOLAR                : 10 11 12
-ECHO                 : 2 3
+DOLAR                : 
+ECHO                 : 8 9
 ELSE                 : 
 ELSEIF               : 
 EMPTY                : 
@@ -165,10 +173,10 @@ EQ                   :
 EXIT                 : 
 EXTENDS              : 
 FALSE                : 
-FALSO                : 17
+FALSO                : 
 FINAL                : 
 FINALLY              : 
-FLOAT                : 8 14
+FLOAT                : 14 23
 FOR                  : 
 FOREACH              : 
 FUNCTION             : 
@@ -182,19 +190,20 @@ IMPLEMENTS           :
 INCLUDE              : 
 INCLUDE_ONCE         : 
 INCREMENT            : 
+INPUT                : 
 INSTANCEOF           : 
 INT                  : 
-INTEGER              : 7 13
+INTEGER              : 13 22
 INTERFACE            : 
 ISSET                : 
 LBRACE               : 
-LCOR                 : 
+LCOR                 : 31
 LE                   : 
 LIST                 : 
-LPAREN               : 
+LPAREN               : 21 30
 LT                   : 
-MINUS                : 20
-MOD                  : 23
+MINUS                : 26
+MOD                  : 29
 MOD_ASSIGNMENT       : 
 MULTIPLE_COMMENT     : 
 MULTIPLICATION_ASSIGNMENT : 
@@ -206,27 +215,27 @@ NOT_IDENTICAL        :
 NULL                 : 
 OBJECT               : 
 OR                   : 
-PLUS                 : 19
+PLUS                 : 25
 PRINT                : 
 PRIVATE              : 
 PROTECTED            : 
 PUBLIC               : 
-PUNTOYCOMA           : 
+PUNTOYCOMA           : 7
 QUESTION             : 
 RBRACE               : 
-RCOR                 : 
+RCOR                 : 31
 REQUIRE              : 
 REQUIRE_ONCE         : 
 RETURN               : 
-RPAREN               : 
-SIMPLE_ASSIGNMENT    : 10 11 12
+RPAREN               : 21 30
+SIMPLE_ASSIGNMENT    : 7 30 31
 SIMPLE_COMMENT       : 
 STATIC               : 
-STRING               : 6
+STRING               : 12
 SUBTRACTION_ASSIGNMENT : 
 SWITCH               : 
 THROW                : 
-TIMES                : 21
+TIMES                : 27
 TRAIT                : 
 TRUE                 : 
 TRY                  : 
@@ -234,8 +243,8 @@ TUPLE                :
 UNSET                : 
 USE                  : 
 VAR                  : 
-VARIABLE             : 9 10 11 12 15
-VERDADERO            : 16
+VARIABLE             : 7 15 24 30 31
+VERDADERO            : 
 VOID                 : 
 WHILE                : 
 YIELD                : 
@@ -243,13 +252,1031 @@ error                :
 
 Nonterminals, with rules where they appear
 
-asignacion           : 
-expresion            : 4 5
-expresiones          : 2 5
-impresion            : 1
-imprimir             : 0
-operador             : 18
-operadorAritmetica   : 12
-valor                : 10 18 18
-valor_bool           : 11
+asignacion           : 3
+declarar_array       : 6
+expresion            : 7 10 11 32 33
+expresion_aritmetica : 5 16 17 21
+expresiones          : 8 11
+factor               : 19 20
+impresion            : 4
+lista_elementos      : 30 31 33
+operador             : 17 19
+programa             : 1 0
+statement            : 1 2
+term                 : 17 18 19
 
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . programa
+    (1) programa -> . statement programa
+    (2) programa -> . statement
+    (3) statement -> . asignacion
+    (4) statement -> . impresion
+    (5) statement -> . expresion_aritmetica
+    (6) statement -> . declarar_array
+    (7) asignacion -> . VARIABLE SIMPLE_ASSIGNMENT expresion PUNTOYCOMA
+    (8) impresion -> . ECHO expresiones
+    (9) impresion -> . ECHO
+    (17) expresion_aritmetica -> . expresion_aritmetica operador term
+    (18) expresion_aritmetica -> . term
+    (30) declarar_array -> . VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN
+    (31) declarar_array -> . VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR
+    (19) term -> . term operador factor
+    (20) term -> . factor
+    (21) factor -> . LPAREN expresion_aritmetica RPAREN
+    (22) factor -> . INTEGER
+    (23) factor -> . FLOAT
+    (24) factor -> . VARIABLE
+
+    VARIABLE        shift and go to state 7
+    ECHO            shift and go to state 8
+    LPAREN          shift and go to state 10
+    INTEGER         shift and go to state 12
+    FLOAT           shift and go to state 13
+
+    programa                       shift and go to state 1
+    statement                      shift and go to state 2
+    asignacion                     shift and go to state 3
+    impresion                      shift and go to state 4
+    expresion_aritmetica           shift and go to state 5
+    declarar_array                 shift and go to state 6
+    term                           shift and go to state 9
+    factor                         shift and go to state 11
+
+state 1
+
+    (0) S' -> programa .
+
+
+
+state 2
+
+    (1) programa -> statement . programa
+    (2) programa -> statement .
+    (1) programa -> . statement programa
+    (2) programa -> . statement
+    (3) statement -> . asignacion
+    (4) statement -> . impresion
+    (5) statement -> . expresion_aritmetica
+    (6) statement -> . declarar_array
+    (7) asignacion -> . VARIABLE SIMPLE_ASSIGNMENT expresion PUNTOYCOMA
+    (8) impresion -> . ECHO expresiones
+    (9) impresion -> . ECHO
+    (17) expresion_aritmetica -> . expresion_aritmetica operador term
+    (18) expresion_aritmetica -> . term
+    (30) declarar_array -> . VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN
+    (31) declarar_array -> . VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR
+    (19) term -> . term operador factor
+    (20) term -> . factor
+    (21) factor -> . LPAREN expresion_aritmetica RPAREN
+    (22) factor -> . INTEGER
+    (23) factor -> . FLOAT
+    (24) factor -> . VARIABLE
+
+    $end            reduce using rule 2 (programa -> statement .)
+    VARIABLE        shift and go to state 7
+    ECHO            shift and go to state 8
+    LPAREN          shift and go to state 10
+    INTEGER         shift and go to state 12
+    FLOAT           shift and go to state 13
+
+    statement                      shift and go to state 2
+    programa                       shift and go to state 14
+    asignacion                     shift and go to state 3
+    impresion                      shift and go to state 4
+    expresion_aritmetica           shift and go to state 5
+    declarar_array                 shift and go to state 6
+    term                           shift and go to state 9
+    factor                         shift and go to state 11
+
+state 3
+
+    (3) statement -> asignacion .
+
+    VARIABLE        reduce using rule 3 (statement -> asignacion .)
+    ECHO            reduce using rule 3 (statement -> asignacion .)
+    LPAREN          reduce using rule 3 (statement -> asignacion .)
+    INTEGER         reduce using rule 3 (statement -> asignacion .)
+    FLOAT           reduce using rule 3 (statement -> asignacion .)
+    $end            reduce using rule 3 (statement -> asignacion .)
+
+
+state 4
+
+    (4) statement -> impresion .
+
+    VARIABLE        reduce using rule 4 (statement -> impresion .)
+    ECHO            reduce using rule 4 (statement -> impresion .)
+    LPAREN          reduce using rule 4 (statement -> impresion .)
+    INTEGER         reduce using rule 4 (statement -> impresion .)
+    FLOAT           reduce using rule 4 (statement -> impresion .)
+    $end            reduce using rule 4 (statement -> impresion .)
+
+
+state 5
+
+    (5) statement -> expresion_aritmetica .
+    (17) expresion_aritmetica -> expresion_aritmetica . operador term
+    (25) operador -> . PLUS
+    (26) operador -> . MINUS
+    (27) operador -> . TIMES
+    (28) operador -> . DIVIDE
+    (29) operador -> . MOD
+
+    VARIABLE        reduce using rule 5 (statement -> expresion_aritmetica .)
+    ECHO            reduce using rule 5 (statement -> expresion_aritmetica .)
+    LPAREN          reduce using rule 5 (statement -> expresion_aritmetica .)
+    INTEGER         reduce using rule 5 (statement -> expresion_aritmetica .)
+    FLOAT           reduce using rule 5 (statement -> expresion_aritmetica .)
+    $end            reduce using rule 5 (statement -> expresion_aritmetica .)
+    PLUS            shift and go to state 16
+    MINUS           shift and go to state 17
+    TIMES           shift and go to state 18
+    DIVIDE          shift and go to state 19
+    MOD             shift and go to state 20
+
+    operador                       shift and go to state 15
+
+state 6
+
+    (6) statement -> declarar_array .
+
+    VARIABLE        reduce using rule 6 (statement -> declarar_array .)
+    ECHO            reduce using rule 6 (statement -> declarar_array .)
+    LPAREN          reduce using rule 6 (statement -> declarar_array .)
+    INTEGER         reduce using rule 6 (statement -> declarar_array .)
+    FLOAT           reduce using rule 6 (statement -> declarar_array .)
+    $end            reduce using rule 6 (statement -> declarar_array .)
+
+
+state 7
+
+    (7) asignacion -> VARIABLE . SIMPLE_ASSIGNMENT expresion PUNTOYCOMA
+    (30) declarar_array -> VARIABLE . SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN
+    (31) declarar_array -> VARIABLE . SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR
+    (24) factor -> VARIABLE .
+
+    SIMPLE_ASSIGNMENT shift and go to state 21
+    PLUS            reduce using rule 24 (factor -> VARIABLE .)
+    MINUS           reduce using rule 24 (factor -> VARIABLE .)
+    TIMES           reduce using rule 24 (factor -> VARIABLE .)
+    DIVIDE          reduce using rule 24 (factor -> VARIABLE .)
+    MOD             reduce using rule 24 (factor -> VARIABLE .)
+    VARIABLE        reduce using rule 24 (factor -> VARIABLE .)
+    ECHO            reduce using rule 24 (factor -> VARIABLE .)
+    LPAREN          reduce using rule 24 (factor -> VARIABLE .)
+    INTEGER         reduce using rule 24 (factor -> VARIABLE .)
+    FLOAT           reduce using rule 24 (factor -> VARIABLE .)
+    $end            reduce using rule 24 (factor -> VARIABLE .)
+
+
+state 8
+
+    (8) impresion -> ECHO . expresiones
+    (9) impresion -> ECHO .
+    (10) expresiones -> . expresion
+    (11) expresiones -> . expresion COMA expresiones
+    (12) expresion -> . STRING
+    (13) expresion -> . INTEGER
+    (14) expresion -> . FLOAT
+    (15) expresion -> . VARIABLE
+    (16) expresion -> . expresion_aritmetica
+    (17) expresion_aritmetica -> . expresion_aritmetica operador term
+    (18) expresion_aritmetica -> . term
+    (19) term -> . term operador factor
+    (20) term -> . factor
+    (21) factor -> . LPAREN expresion_aritmetica RPAREN
+    (22) factor -> . INTEGER
+    (23) factor -> . FLOAT
+    (24) factor -> . VARIABLE
+
+  ! shift/reduce conflict for INTEGER resolved as shift
+  ! shift/reduce conflict for FLOAT resolved as shift
+  ! shift/reduce conflict for VARIABLE resolved as shift
+  ! shift/reduce conflict for LPAREN resolved as shift
+    ECHO            reduce using rule 9 (impresion -> ECHO .)
+    $end            reduce using rule 9 (impresion -> ECHO .)
+    STRING          shift and go to state 24
+    INTEGER         shift and go to state 25
+    FLOAT           shift and go to state 26
+    VARIABLE        shift and go to state 27
+    LPAREN          shift and go to state 10
+
+  ! VARIABLE        [ reduce using rule 9 (impresion -> ECHO .) ]
+  ! LPAREN          [ reduce using rule 9 (impresion -> ECHO .) ]
+  ! INTEGER         [ reduce using rule 9 (impresion -> ECHO .) ]
+  ! FLOAT           [ reduce using rule 9 (impresion -> ECHO .) ]
+
+    expresiones                    shift and go to state 22
+    expresion                      shift and go to state 23
+    expresion_aritmetica           shift and go to state 28
+    term                           shift and go to state 9
+    factor                         shift and go to state 11
+
+state 9
+
+    (18) expresion_aritmetica -> term .
+    (19) term -> term . operador factor
+    (25) operador -> . PLUS
+    (26) operador -> . MINUS
+    (27) operador -> . TIMES
+    (28) operador -> . DIVIDE
+    (29) operador -> . MOD
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for MOD resolved as shift
+    VARIABLE        reduce using rule 18 (expresion_aritmetica -> term .)
+    ECHO            reduce using rule 18 (expresion_aritmetica -> term .)
+    LPAREN          reduce using rule 18 (expresion_aritmetica -> term .)
+    INTEGER         reduce using rule 18 (expresion_aritmetica -> term .)
+    FLOAT           reduce using rule 18 (expresion_aritmetica -> term .)
+    $end            reduce using rule 18 (expresion_aritmetica -> term .)
+    COMA            reduce using rule 18 (expresion_aritmetica -> term .)
+    RPAREN          reduce using rule 18 (expresion_aritmetica -> term .)
+    PUNTOYCOMA      reduce using rule 18 (expresion_aritmetica -> term .)
+    RCOR            reduce using rule 18 (expresion_aritmetica -> term .)
+    PLUS            shift and go to state 16
+    MINUS           shift and go to state 17
+    TIMES           shift and go to state 18
+    DIVIDE          shift and go to state 19
+    MOD             shift and go to state 20
+
+  ! PLUS            [ reduce using rule 18 (expresion_aritmetica -> term .) ]
+  ! MINUS           [ reduce using rule 18 (expresion_aritmetica -> term .) ]
+  ! TIMES           [ reduce using rule 18 (expresion_aritmetica -> term .) ]
+  ! DIVIDE          [ reduce using rule 18 (expresion_aritmetica -> term .) ]
+  ! MOD             [ reduce using rule 18 (expresion_aritmetica -> term .) ]
+
+    operador                       shift and go to state 29
+
+state 10
+
+    (21) factor -> LPAREN . expresion_aritmetica RPAREN
+    (17) expresion_aritmetica -> . expresion_aritmetica operador term
+    (18) expresion_aritmetica -> . term
+    (19) term -> . term operador factor
+    (20) term -> . factor
+    (21) factor -> . LPAREN expresion_aritmetica RPAREN
+    (22) factor -> . INTEGER
+    (23) factor -> . FLOAT
+    (24) factor -> . VARIABLE
+
+    LPAREN          shift and go to state 10
+    INTEGER         shift and go to state 12
+    FLOAT           shift and go to state 13
+    VARIABLE        shift and go to state 31
+
+    expresion_aritmetica           shift and go to state 30
+    term                           shift and go to state 9
+    factor                         shift and go to state 11
+
+state 11
+
+    (20) term -> factor .
+
+    PLUS            reduce using rule 20 (term -> factor .)
+    MINUS           reduce using rule 20 (term -> factor .)
+    TIMES           reduce using rule 20 (term -> factor .)
+    DIVIDE          reduce using rule 20 (term -> factor .)
+    MOD             reduce using rule 20 (term -> factor .)
+    VARIABLE        reduce using rule 20 (term -> factor .)
+    ECHO            reduce using rule 20 (term -> factor .)
+    LPAREN          reduce using rule 20 (term -> factor .)
+    INTEGER         reduce using rule 20 (term -> factor .)
+    FLOAT           reduce using rule 20 (term -> factor .)
+    $end            reduce using rule 20 (term -> factor .)
+    COMA            reduce using rule 20 (term -> factor .)
+    RPAREN          reduce using rule 20 (term -> factor .)
+    PUNTOYCOMA      reduce using rule 20 (term -> factor .)
+    RCOR            reduce using rule 20 (term -> factor .)
+
+
+state 12
+
+    (22) factor -> INTEGER .
+
+    PLUS            reduce using rule 22 (factor -> INTEGER .)
+    MINUS           reduce using rule 22 (factor -> INTEGER .)
+    TIMES           reduce using rule 22 (factor -> INTEGER .)
+    DIVIDE          reduce using rule 22 (factor -> INTEGER .)
+    MOD             reduce using rule 22 (factor -> INTEGER .)
+    VARIABLE        reduce using rule 22 (factor -> INTEGER .)
+    ECHO            reduce using rule 22 (factor -> INTEGER .)
+    LPAREN          reduce using rule 22 (factor -> INTEGER .)
+    INTEGER         reduce using rule 22 (factor -> INTEGER .)
+    FLOAT           reduce using rule 22 (factor -> INTEGER .)
+    $end            reduce using rule 22 (factor -> INTEGER .)
+    RPAREN          reduce using rule 22 (factor -> INTEGER .)
+    COMA            reduce using rule 22 (factor -> INTEGER .)
+    PUNTOYCOMA      reduce using rule 22 (factor -> INTEGER .)
+    RCOR            reduce using rule 22 (factor -> INTEGER .)
+
+
+state 13
+
+    (23) factor -> FLOAT .
+
+    PLUS            reduce using rule 23 (factor -> FLOAT .)
+    MINUS           reduce using rule 23 (factor -> FLOAT .)
+    TIMES           reduce using rule 23 (factor -> FLOAT .)
+    DIVIDE          reduce using rule 23 (factor -> FLOAT .)
+    MOD             reduce using rule 23 (factor -> FLOAT .)
+    VARIABLE        reduce using rule 23 (factor -> FLOAT .)
+    ECHO            reduce using rule 23 (factor -> FLOAT .)
+    LPAREN          reduce using rule 23 (factor -> FLOAT .)
+    INTEGER         reduce using rule 23 (factor -> FLOAT .)
+    FLOAT           reduce using rule 23 (factor -> FLOAT .)
+    $end            reduce using rule 23 (factor -> FLOAT .)
+    RPAREN          reduce using rule 23 (factor -> FLOAT .)
+    COMA            reduce using rule 23 (factor -> FLOAT .)
+    PUNTOYCOMA      reduce using rule 23 (factor -> FLOAT .)
+    RCOR            reduce using rule 23 (factor -> FLOAT .)
+
+
+state 14
+
+    (1) programa -> statement programa .
+
+    $end            reduce using rule 1 (programa -> statement programa .)
+
+
+state 15
+
+    (17) expresion_aritmetica -> expresion_aritmetica operador . term
+    (19) term -> . term operador factor
+    (20) term -> . factor
+    (21) factor -> . LPAREN expresion_aritmetica RPAREN
+    (22) factor -> . INTEGER
+    (23) factor -> . FLOAT
+    (24) factor -> . VARIABLE
+
+    LPAREN          shift and go to state 10
+    INTEGER         shift and go to state 12
+    FLOAT           shift and go to state 13
+    VARIABLE        shift and go to state 31
+
+    term                           shift and go to state 32
+    factor                         shift and go to state 11
+
+state 16
+
+    (25) operador -> PLUS .
+
+    LPAREN          reduce using rule 25 (operador -> PLUS .)
+    INTEGER         reduce using rule 25 (operador -> PLUS .)
+    FLOAT           reduce using rule 25 (operador -> PLUS .)
+    VARIABLE        reduce using rule 25 (operador -> PLUS .)
+
+
+state 17
+
+    (26) operador -> MINUS .
+
+    LPAREN          reduce using rule 26 (operador -> MINUS .)
+    INTEGER         reduce using rule 26 (operador -> MINUS .)
+    FLOAT           reduce using rule 26 (operador -> MINUS .)
+    VARIABLE        reduce using rule 26 (operador -> MINUS .)
+
+
+state 18
+
+    (27) operador -> TIMES .
+
+    LPAREN          reduce using rule 27 (operador -> TIMES .)
+    INTEGER         reduce using rule 27 (operador -> TIMES .)
+    FLOAT           reduce using rule 27 (operador -> TIMES .)
+    VARIABLE        reduce using rule 27 (operador -> TIMES .)
+
+
+state 19
+
+    (28) operador -> DIVIDE .
+
+    LPAREN          reduce using rule 28 (operador -> DIVIDE .)
+    INTEGER         reduce using rule 28 (operador -> DIVIDE .)
+    FLOAT           reduce using rule 28 (operador -> DIVIDE .)
+    VARIABLE        reduce using rule 28 (operador -> DIVIDE .)
+
+
+state 20
+
+    (29) operador -> MOD .
+
+    LPAREN          reduce using rule 29 (operador -> MOD .)
+    INTEGER         reduce using rule 29 (operador -> MOD .)
+    FLOAT           reduce using rule 29 (operador -> MOD .)
+    VARIABLE        reduce using rule 29 (operador -> MOD .)
+
+
+state 21
+
+    (7) asignacion -> VARIABLE SIMPLE_ASSIGNMENT . expresion PUNTOYCOMA
+    (30) declarar_array -> VARIABLE SIMPLE_ASSIGNMENT . ARRAY LPAREN lista_elementos RPAREN
+    (31) declarar_array -> VARIABLE SIMPLE_ASSIGNMENT . LCOR lista_elementos RCOR
+    (12) expresion -> . STRING
+    (13) expresion -> . INTEGER
+    (14) expresion -> . FLOAT
+    (15) expresion -> . VARIABLE
+    (16) expresion -> . expresion_aritmetica
+    (17) expresion_aritmetica -> . expresion_aritmetica operador term
+    (18) expresion_aritmetica -> . term
+    (19) term -> . term operador factor
+    (20) term -> . factor
+    (21) factor -> . LPAREN expresion_aritmetica RPAREN
+    (22) factor -> . INTEGER
+    (23) factor -> . FLOAT
+    (24) factor -> . VARIABLE
+
+    ARRAY           shift and go to state 34
+    LCOR            shift and go to state 35
+    STRING          shift and go to state 24
+    INTEGER         shift and go to state 25
+    FLOAT           shift and go to state 26
+    VARIABLE        shift and go to state 27
+    LPAREN          shift and go to state 10
+
+    expresion                      shift and go to state 33
+    expresion_aritmetica           shift and go to state 28
+    term                           shift and go to state 9
+    factor                         shift and go to state 11
+
+state 22
+
+    (8) impresion -> ECHO expresiones .
+
+    VARIABLE        reduce using rule 8 (impresion -> ECHO expresiones .)
+    ECHO            reduce using rule 8 (impresion -> ECHO expresiones .)
+    LPAREN          reduce using rule 8 (impresion -> ECHO expresiones .)
+    INTEGER         reduce using rule 8 (impresion -> ECHO expresiones .)
+    FLOAT           reduce using rule 8 (impresion -> ECHO expresiones .)
+    $end            reduce using rule 8 (impresion -> ECHO expresiones .)
+
+
+state 23
+
+    (10) expresiones -> expresion .
+    (11) expresiones -> expresion . COMA expresiones
+
+    VARIABLE        reduce using rule 10 (expresiones -> expresion .)
+    ECHO            reduce using rule 10 (expresiones -> expresion .)
+    LPAREN          reduce using rule 10 (expresiones -> expresion .)
+    INTEGER         reduce using rule 10 (expresiones -> expresion .)
+    FLOAT           reduce using rule 10 (expresiones -> expresion .)
+    $end            reduce using rule 10 (expresiones -> expresion .)
+    COMA            shift and go to state 36
+
+
+state 24
+
+    (12) expresion -> STRING .
+
+    COMA            reduce using rule 12 (expresion -> STRING .)
+    VARIABLE        reduce using rule 12 (expresion -> STRING .)
+    ECHO            reduce using rule 12 (expresion -> STRING .)
+    LPAREN          reduce using rule 12 (expresion -> STRING .)
+    INTEGER         reduce using rule 12 (expresion -> STRING .)
+    FLOAT           reduce using rule 12 (expresion -> STRING .)
+    $end            reduce using rule 12 (expresion -> STRING .)
+    PUNTOYCOMA      reduce using rule 12 (expresion -> STRING .)
+    RCOR            reduce using rule 12 (expresion -> STRING .)
+    RPAREN          reduce using rule 12 (expresion -> STRING .)
+
+
+state 25
+
+    (13) expresion -> INTEGER .
+    (22) factor -> INTEGER .
+
+  ! reduce/reduce conflict for COMA resolved using rule 13 (expresion -> INTEGER .)
+  ! reduce/reduce conflict for VARIABLE resolved using rule 13 (expresion -> INTEGER .)
+  ! reduce/reduce conflict for ECHO resolved using rule 13 (expresion -> INTEGER .)
+  ! reduce/reduce conflict for LPAREN resolved using rule 13 (expresion -> INTEGER .)
+  ! reduce/reduce conflict for INTEGER resolved using rule 13 (expresion -> INTEGER .)
+  ! reduce/reduce conflict for FLOAT resolved using rule 13 (expresion -> INTEGER .)
+  ! reduce/reduce conflict for $end resolved using rule 13 (expresion -> INTEGER .)
+  ! reduce/reduce conflict for PUNTOYCOMA resolved using rule 13 (expresion -> INTEGER .)
+  ! reduce/reduce conflict for RCOR resolved using rule 13 (expresion -> INTEGER .)
+  ! reduce/reduce conflict for RPAREN resolved using rule 13 (expresion -> INTEGER .)
+    COMA            reduce using rule 13 (expresion -> INTEGER .)
+    VARIABLE        reduce using rule 13 (expresion -> INTEGER .)
+    ECHO            reduce using rule 13 (expresion -> INTEGER .)
+    LPAREN          reduce using rule 13 (expresion -> INTEGER .)
+    INTEGER         reduce using rule 13 (expresion -> INTEGER .)
+    FLOAT           reduce using rule 13 (expresion -> INTEGER .)
+    $end            reduce using rule 13 (expresion -> INTEGER .)
+    PUNTOYCOMA      reduce using rule 13 (expresion -> INTEGER .)
+    RCOR            reduce using rule 13 (expresion -> INTEGER .)
+    RPAREN          reduce using rule 13 (expresion -> INTEGER .)
+    PLUS            reduce using rule 22 (factor -> INTEGER .)
+    MINUS           reduce using rule 22 (factor -> INTEGER .)
+    TIMES           reduce using rule 22 (factor -> INTEGER .)
+    DIVIDE          reduce using rule 22 (factor -> INTEGER .)
+    MOD             reduce using rule 22 (factor -> INTEGER .)
+
+  ! COMA            [ reduce using rule 22 (factor -> INTEGER .) ]
+  ! VARIABLE        [ reduce using rule 22 (factor -> INTEGER .) ]
+  ! ECHO            [ reduce using rule 22 (factor -> INTEGER .) ]
+  ! LPAREN          [ reduce using rule 22 (factor -> INTEGER .) ]
+  ! INTEGER         [ reduce using rule 22 (factor -> INTEGER .) ]
+  ! FLOAT           [ reduce using rule 22 (factor -> INTEGER .) ]
+  ! $end            [ reduce using rule 22 (factor -> INTEGER .) ]
+  ! PUNTOYCOMA      [ reduce using rule 22 (factor -> INTEGER .) ]
+  ! RCOR            [ reduce using rule 22 (factor -> INTEGER .) ]
+  ! RPAREN          [ reduce using rule 22 (factor -> INTEGER .) ]
+
+
+state 26
+
+    (14) expresion -> FLOAT .
+    (23) factor -> FLOAT .
+
+  ! reduce/reduce conflict for COMA resolved using rule 14 (expresion -> FLOAT .)
+  ! reduce/reduce conflict for VARIABLE resolved using rule 14 (expresion -> FLOAT .)
+  ! reduce/reduce conflict for ECHO resolved using rule 14 (expresion -> FLOAT .)
+  ! reduce/reduce conflict for LPAREN resolved using rule 14 (expresion -> FLOAT .)
+  ! reduce/reduce conflict for INTEGER resolved using rule 14 (expresion -> FLOAT .)
+  ! reduce/reduce conflict for FLOAT resolved using rule 14 (expresion -> FLOAT .)
+  ! reduce/reduce conflict for $end resolved using rule 14 (expresion -> FLOAT .)
+  ! reduce/reduce conflict for PUNTOYCOMA resolved using rule 14 (expresion -> FLOAT .)
+  ! reduce/reduce conflict for RCOR resolved using rule 14 (expresion -> FLOAT .)
+  ! reduce/reduce conflict for RPAREN resolved using rule 14 (expresion -> FLOAT .)
+    COMA            reduce using rule 14 (expresion -> FLOAT .)
+    VARIABLE        reduce using rule 14 (expresion -> FLOAT .)
+    ECHO            reduce using rule 14 (expresion -> FLOAT .)
+    LPAREN          reduce using rule 14 (expresion -> FLOAT .)
+    INTEGER         reduce using rule 14 (expresion -> FLOAT .)
+    FLOAT           reduce using rule 14 (expresion -> FLOAT .)
+    $end            reduce using rule 14 (expresion -> FLOAT .)
+    PUNTOYCOMA      reduce using rule 14 (expresion -> FLOAT .)
+    RCOR            reduce using rule 14 (expresion -> FLOAT .)
+    RPAREN          reduce using rule 14 (expresion -> FLOAT .)
+    PLUS            reduce using rule 23 (factor -> FLOAT .)
+    MINUS           reduce using rule 23 (factor -> FLOAT .)
+    TIMES           reduce using rule 23 (factor -> FLOAT .)
+    DIVIDE          reduce using rule 23 (factor -> FLOAT .)
+    MOD             reduce using rule 23 (factor -> FLOAT .)
+
+  ! COMA            [ reduce using rule 23 (factor -> FLOAT .) ]
+  ! VARIABLE        [ reduce using rule 23 (factor -> FLOAT .) ]
+  ! ECHO            [ reduce using rule 23 (factor -> FLOAT .) ]
+  ! LPAREN          [ reduce using rule 23 (factor -> FLOAT .) ]
+  ! INTEGER         [ reduce using rule 23 (factor -> FLOAT .) ]
+  ! FLOAT           [ reduce using rule 23 (factor -> FLOAT .) ]
+  ! $end            [ reduce using rule 23 (factor -> FLOAT .) ]
+  ! PUNTOYCOMA      [ reduce using rule 23 (factor -> FLOAT .) ]
+  ! RCOR            [ reduce using rule 23 (factor -> FLOAT .) ]
+  ! RPAREN          [ reduce using rule 23 (factor -> FLOAT .) ]
+
+
+state 27
+
+    (15) expresion -> VARIABLE .
+    (24) factor -> VARIABLE .
+
+  ! reduce/reduce conflict for COMA resolved using rule 15 (expresion -> VARIABLE .)
+  ! reduce/reduce conflict for VARIABLE resolved using rule 15 (expresion -> VARIABLE .)
+  ! reduce/reduce conflict for ECHO resolved using rule 15 (expresion -> VARIABLE .)
+  ! reduce/reduce conflict for LPAREN resolved using rule 15 (expresion -> VARIABLE .)
+  ! reduce/reduce conflict for INTEGER resolved using rule 15 (expresion -> VARIABLE .)
+  ! reduce/reduce conflict for FLOAT resolved using rule 15 (expresion -> VARIABLE .)
+  ! reduce/reduce conflict for $end resolved using rule 15 (expresion -> VARIABLE .)
+  ! reduce/reduce conflict for PUNTOYCOMA resolved using rule 15 (expresion -> VARIABLE .)
+  ! reduce/reduce conflict for RCOR resolved using rule 15 (expresion -> VARIABLE .)
+  ! reduce/reduce conflict for RPAREN resolved using rule 15 (expresion -> VARIABLE .)
+    COMA            reduce using rule 15 (expresion -> VARIABLE .)
+    VARIABLE        reduce using rule 15 (expresion -> VARIABLE .)
+    ECHO            reduce using rule 15 (expresion -> VARIABLE .)
+    LPAREN          reduce using rule 15 (expresion -> VARIABLE .)
+    INTEGER         reduce using rule 15 (expresion -> VARIABLE .)
+    FLOAT           reduce using rule 15 (expresion -> VARIABLE .)
+    $end            reduce using rule 15 (expresion -> VARIABLE .)
+    PUNTOYCOMA      reduce using rule 15 (expresion -> VARIABLE .)
+    RCOR            reduce using rule 15 (expresion -> VARIABLE .)
+    RPAREN          reduce using rule 15 (expresion -> VARIABLE .)
+    PLUS            reduce using rule 24 (factor -> VARIABLE .)
+    MINUS           reduce using rule 24 (factor -> VARIABLE .)
+    TIMES           reduce using rule 24 (factor -> VARIABLE .)
+    DIVIDE          reduce using rule 24 (factor -> VARIABLE .)
+    MOD             reduce using rule 24 (factor -> VARIABLE .)
+
+  ! COMA            [ reduce using rule 24 (factor -> VARIABLE .) ]
+  ! VARIABLE        [ reduce using rule 24 (factor -> VARIABLE .) ]
+  ! ECHO            [ reduce using rule 24 (factor -> VARIABLE .) ]
+  ! LPAREN          [ reduce using rule 24 (factor -> VARIABLE .) ]
+  ! INTEGER         [ reduce using rule 24 (factor -> VARIABLE .) ]
+  ! FLOAT           [ reduce using rule 24 (factor -> VARIABLE .) ]
+  ! $end            [ reduce using rule 24 (factor -> VARIABLE .) ]
+  ! PUNTOYCOMA      [ reduce using rule 24 (factor -> VARIABLE .) ]
+  ! RCOR            [ reduce using rule 24 (factor -> VARIABLE .) ]
+  ! RPAREN          [ reduce using rule 24 (factor -> VARIABLE .) ]
+
+
+state 28
+
+    (16) expresion -> expresion_aritmetica .
+    (17) expresion_aritmetica -> expresion_aritmetica . operador term
+    (25) operador -> . PLUS
+    (26) operador -> . MINUS
+    (27) operador -> . TIMES
+    (28) operador -> . DIVIDE
+    (29) operador -> . MOD
+
+    COMA            reduce using rule 16 (expresion -> expresion_aritmetica .)
+    VARIABLE        reduce using rule 16 (expresion -> expresion_aritmetica .)
+    ECHO            reduce using rule 16 (expresion -> expresion_aritmetica .)
+    LPAREN          reduce using rule 16 (expresion -> expresion_aritmetica .)
+    INTEGER         reduce using rule 16 (expresion -> expresion_aritmetica .)
+    FLOAT           reduce using rule 16 (expresion -> expresion_aritmetica .)
+    $end            reduce using rule 16 (expresion -> expresion_aritmetica .)
+    PUNTOYCOMA      reduce using rule 16 (expresion -> expresion_aritmetica .)
+    RCOR            reduce using rule 16 (expresion -> expresion_aritmetica .)
+    RPAREN          reduce using rule 16 (expresion -> expresion_aritmetica .)
+    PLUS            shift and go to state 16
+    MINUS           shift and go to state 17
+    TIMES           shift and go to state 18
+    DIVIDE          shift and go to state 19
+    MOD             shift and go to state 20
+
+    operador                       shift and go to state 15
+
+state 29
+
+    (19) term -> term operador . factor
+    (21) factor -> . LPAREN expresion_aritmetica RPAREN
+    (22) factor -> . INTEGER
+    (23) factor -> . FLOAT
+    (24) factor -> . VARIABLE
+
+    LPAREN          shift and go to state 10
+    INTEGER         shift and go to state 12
+    FLOAT           shift and go to state 13
+    VARIABLE        shift and go to state 31
+
+    factor                         shift and go to state 37
+
+state 30
+
+    (21) factor -> LPAREN expresion_aritmetica . RPAREN
+    (17) expresion_aritmetica -> expresion_aritmetica . operador term
+    (25) operador -> . PLUS
+    (26) operador -> . MINUS
+    (27) operador -> . TIMES
+    (28) operador -> . DIVIDE
+    (29) operador -> . MOD
+
+    RPAREN          shift and go to state 38
+    PLUS            shift and go to state 16
+    MINUS           shift and go to state 17
+    TIMES           shift and go to state 18
+    DIVIDE          shift and go to state 19
+    MOD             shift and go to state 20
+
+    operador                       shift and go to state 15
+
+state 31
+
+    (24) factor -> VARIABLE .
+
+    PLUS            reduce using rule 24 (factor -> VARIABLE .)
+    MINUS           reduce using rule 24 (factor -> VARIABLE .)
+    TIMES           reduce using rule 24 (factor -> VARIABLE .)
+    DIVIDE          reduce using rule 24 (factor -> VARIABLE .)
+    MOD             reduce using rule 24 (factor -> VARIABLE .)
+    RPAREN          reduce using rule 24 (factor -> VARIABLE .)
+    VARIABLE        reduce using rule 24 (factor -> VARIABLE .)
+    ECHO            reduce using rule 24 (factor -> VARIABLE .)
+    LPAREN          reduce using rule 24 (factor -> VARIABLE .)
+    INTEGER         reduce using rule 24 (factor -> VARIABLE .)
+    FLOAT           reduce using rule 24 (factor -> VARIABLE .)
+    $end            reduce using rule 24 (factor -> VARIABLE .)
+    COMA            reduce using rule 24 (factor -> VARIABLE .)
+    PUNTOYCOMA      reduce using rule 24 (factor -> VARIABLE .)
+    RCOR            reduce using rule 24 (factor -> VARIABLE .)
+
+
+state 32
+
+    (17) expresion_aritmetica -> expresion_aritmetica operador term .
+    (19) term -> term . operador factor
+    (25) operador -> . PLUS
+    (26) operador -> . MINUS
+    (27) operador -> . TIMES
+    (28) operador -> . DIVIDE
+    (29) operador -> . MOD
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for MOD resolved as shift
+    VARIABLE        reduce using rule 17 (expresion_aritmetica -> expresion_aritmetica operador term .)
+    ECHO            reduce using rule 17 (expresion_aritmetica -> expresion_aritmetica operador term .)
+    LPAREN          reduce using rule 17 (expresion_aritmetica -> expresion_aritmetica operador term .)
+    INTEGER         reduce using rule 17 (expresion_aritmetica -> expresion_aritmetica operador term .)
+    FLOAT           reduce using rule 17 (expresion_aritmetica -> expresion_aritmetica operador term .)
+    $end            reduce using rule 17 (expresion_aritmetica -> expresion_aritmetica operador term .)
+    COMA            reduce using rule 17 (expresion_aritmetica -> expresion_aritmetica operador term .)
+    RPAREN          reduce using rule 17 (expresion_aritmetica -> expresion_aritmetica operador term .)
+    PUNTOYCOMA      reduce using rule 17 (expresion_aritmetica -> expresion_aritmetica operador term .)
+    RCOR            reduce using rule 17 (expresion_aritmetica -> expresion_aritmetica operador term .)
+    PLUS            shift and go to state 16
+    MINUS           shift and go to state 17
+    TIMES           shift and go to state 18
+    DIVIDE          shift and go to state 19
+    MOD             shift and go to state 20
+
+  ! PLUS            [ reduce using rule 17 (expresion_aritmetica -> expresion_aritmetica operador term .) ]
+  ! MINUS           [ reduce using rule 17 (expresion_aritmetica -> expresion_aritmetica operador term .) ]
+  ! TIMES           [ reduce using rule 17 (expresion_aritmetica -> expresion_aritmetica operador term .) ]
+  ! DIVIDE          [ reduce using rule 17 (expresion_aritmetica -> expresion_aritmetica operador term .) ]
+  ! MOD             [ reduce using rule 17 (expresion_aritmetica -> expresion_aritmetica operador term .) ]
+
+    operador                       shift and go to state 29
+
+state 33
+
+    (7) asignacion -> VARIABLE SIMPLE_ASSIGNMENT expresion . PUNTOYCOMA
+
+    PUNTOYCOMA      shift and go to state 39
+
+
+state 34
+
+    (30) declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY . LPAREN lista_elementos RPAREN
+
+    LPAREN          shift and go to state 40
+
+
+state 35
+
+    (31) declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR . lista_elementos RCOR
+    (32) lista_elementos -> . expresion
+    (33) lista_elementos -> . expresion COMA lista_elementos
+    (12) expresion -> . STRING
+    (13) expresion -> . INTEGER
+    (14) expresion -> . FLOAT
+    (15) expresion -> . VARIABLE
+    (16) expresion -> . expresion_aritmetica
+    (17) expresion_aritmetica -> . expresion_aritmetica operador term
+    (18) expresion_aritmetica -> . term
+    (19) term -> . term operador factor
+    (20) term -> . factor
+    (21) factor -> . LPAREN expresion_aritmetica RPAREN
+    (22) factor -> . INTEGER
+    (23) factor -> . FLOAT
+    (24) factor -> . VARIABLE
+
+    STRING          shift and go to state 24
+    INTEGER         shift and go to state 25
+    FLOAT           shift and go to state 26
+    VARIABLE        shift and go to state 27
+    LPAREN          shift and go to state 10
+
+    lista_elementos                shift and go to state 41
+    expresion                      shift and go to state 42
+    expresion_aritmetica           shift and go to state 28
+    term                           shift and go to state 9
+    factor                         shift and go to state 11
+
+state 36
+
+    (11) expresiones -> expresion COMA . expresiones
+    (10) expresiones -> . expresion
+    (11) expresiones -> . expresion COMA expresiones
+    (12) expresion -> . STRING
+    (13) expresion -> . INTEGER
+    (14) expresion -> . FLOAT
+    (15) expresion -> . VARIABLE
+    (16) expresion -> . expresion_aritmetica
+    (17) expresion_aritmetica -> . expresion_aritmetica operador term
+    (18) expresion_aritmetica -> . term
+    (19) term -> . term operador factor
+    (20) term -> . factor
+    (21) factor -> . LPAREN expresion_aritmetica RPAREN
+    (22) factor -> . INTEGER
+    (23) factor -> . FLOAT
+    (24) factor -> . VARIABLE
+
+    STRING          shift and go to state 24
+    INTEGER         shift and go to state 25
+    FLOAT           shift and go to state 26
+    VARIABLE        shift and go to state 27
+    LPAREN          shift and go to state 10
+
+    expresion                      shift and go to state 23
+    expresiones                    shift and go to state 43
+    expresion_aritmetica           shift and go to state 28
+    term                           shift and go to state 9
+    factor                         shift and go to state 11
+
+state 37
+
+    (19) term -> term operador factor .
+
+    PLUS            reduce using rule 19 (term -> term operador factor .)
+    MINUS           reduce using rule 19 (term -> term operador factor .)
+    TIMES           reduce using rule 19 (term -> term operador factor .)
+    DIVIDE          reduce using rule 19 (term -> term operador factor .)
+    MOD             reduce using rule 19 (term -> term operador factor .)
+    VARIABLE        reduce using rule 19 (term -> term operador factor .)
+    ECHO            reduce using rule 19 (term -> term operador factor .)
+    LPAREN          reduce using rule 19 (term -> term operador factor .)
+    INTEGER         reduce using rule 19 (term -> term operador factor .)
+    FLOAT           reduce using rule 19 (term -> term operador factor .)
+    $end            reduce using rule 19 (term -> term operador factor .)
+    COMA            reduce using rule 19 (term -> term operador factor .)
+    RPAREN          reduce using rule 19 (term -> term operador factor .)
+    PUNTOYCOMA      reduce using rule 19 (term -> term operador factor .)
+    RCOR            reduce using rule 19 (term -> term operador factor .)
+
+
+state 38
+
+    (21) factor -> LPAREN expresion_aritmetica RPAREN .
+
+    PLUS            reduce using rule 21 (factor -> LPAREN expresion_aritmetica RPAREN .)
+    MINUS           reduce using rule 21 (factor -> LPAREN expresion_aritmetica RPAREN .)
+    TIMES           reduce using rule 21 (factor -> LPAREN expresion_aritmetica RPAREN .)
+    DIVIDE          reduce using rule 21 (factor -> LPAREN expresion_aritmetica RPAREN .)
+    MOD             reduce using rule 21 (factor -> LPAREN expresion_aritmetica RPAREN .)
+    VARIABLE        reduce using rule 21 (factor -> LPAREN expresion_aritmetica RPAREN .)
+    ECHO            reduce using rule 21 (factor -> LPAREN expresion_aritmetica RPAREN .)
+    LPAREN          reduce using rule 21 (factor -> LPAREN expresion_aritmetica RPAREN .)
+    INTEGER         reduce using rule 21 (factor -> LPAREN expresion_aritmetica RPAREN .)
+    FLOAT           reduce using rule 21 (factor -> LPAREN expresion_aritmetica RPAREN .)
+    $end            reduce using rule 21 (factor -> LPAREN expresion_aritmetica RPAREN .)
+    COMA            reduce using rule 21 (factor -> LPAREN expresion_aritmetica RPAREN .)
+    RPAREN          reduce using rule 21 (factor -> LPAREN expresion_aritmetica RPAREN .)
+    PUNTOYCOMA      reduce using rule 21 (factor -> LPAREN expresion_aritmetica RPAREN .)
+    RCOR            reduce using rule 21 (factor -> LPAREN expresion_aritmetica RPAREN .)
+
+
+state 39
+
+    (7) asignacion -> VARIABLE SIMPLE_ASSIGNMENT expresion PUNTOYCOMA .
+
+    VARIABLE        reduce using rule 7 (asignacion -> VARIABLE SIMPLE_ASSIGNMENT expresion PUNTOYCOMA .)
+    ECHO            reduce using rule 7 (asignacion -> VARIABLE SIMPLE_ASSIGNMENT expresion PUNTOYCOMA .)
+    LPAREN          reduce using rule 7 (asignacion -> VARIABLE SIMPLE_ASSIGNMENT expresion PUNTOYCOMA .)
+    INTEGER         reduce using rule 7 (asignacion -> VARIABLE SIMPLE_ASSIGNMENT expresion PUNTOYCOMA .)
+    FLOAT           reduce using rule 7 (asignacion -> VARIABLE SIMPLE_ASSIGNMENT expresion PUNTOYCOMA .)
+    $end            reduce using rule 7 (asignacion -> VARIABLE SIMPLE_ASSIGNMENT expresion PUNTOYCOMA .)
+
+
+state 40
+
+    (30) declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN . lista_elementos RPAREN
+    (32) lista_elementos -> . expresion
+    (33) lista_elementos -> . expresion COMA lista_elementos
+    (12) expresion -> . STRING
+    (13) expresion -> . INTEGER
+    (14) expresion -> . FLOAT
+    (15) expresion -> . VARIABLE
+    (16) expresion -> . expresion_aritmetica
+    (17) expresion_aritmetica -> . expresion_aritmetica operador term
+    (18) expresion_aritmetica -> . term
+    (19) term -> . term operador factor
+    (20) term -> . factor
+    (21) factor -> . LPAREN expresion_aritmetica RPAREN
+    (22) factor -> . INTEGER
+    (23) factor -> . FLOAT
+    (24) factor -> . VARIABLE
+
+    STRING          shift and go to state 24
+    INTEGER         shift and go to state 25
+    FLOAT           shift and go to state 26
+    VARIABLE        shift and go to state 27
+    LPAREN          shift and go to state 10
+
+    lista_elementos                shift and go to state 44
+    expresion                      shift and go to state 42
+    expresion_aritmetica           shift and go to state 28
+    term                           shift and go to state 9
+    factor                         shift and go to state 11
+
+state 41
+
+    (31) declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos . RCOR
+
+    RCOR            shift and go to state 45
+
+
+state 42
+
+    (32) lista_elementos -> expresion .
+    (33) lista_elementos -> expresion . COMA lista_elementos
+
+    RCOR            reduce using rule 32 (lista_elementos -> expresion .)
+    RPAREN          reduce using rule 32 (lista_elementos -> expresion .)
+    COMA            shift and go to state 46
+
+
+state 43
+
+    (11) expresiones -> expresion COMA expresiones .
+
+    VARIABLE        reduce using rule 11 (expresiones -> expresion COMA expresiones .)
+    ECHO            reduce using rule 11 (expresiones -> expresion COMA expresiones .)
+    LPAREN          reduce using rule 11 (expresiones -> expresion COMA expresiones .)
+    INTEGER         reduce using rule 11 (expresiones -> expresion COMA expresiones .)
+    FLOAT           reduce using rule 11 (expresiones -> expresion COMA expresiones .)
+    $end            reduce using rule 11 (expresiones -> expresion COMA expresiones .)
+
+
+state 44
+
+    (30) declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos . RPAREN
+
+    RPAREN          shift and go to state 47
+
+
+state 45
+
+    (31) declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR .
+
+    VARIABLE        reduce using rule 31 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR .)
+    ECHO            reduce using rule 31 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR .)
+    LPAREN          reduce using rule 31 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR .)
+    INTEGER         reduce using rule 31 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR .)
+    FLOAT           reduce using rule 31 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR .)
+    $end            reduce using rule 31 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR .)
+
+
+state 46
+
+    (33) lista_elementos -> expresion COMA . lista_elementos
+    (32) lista_elementos -> . expresion
+    (33) lista_elementos -> . expresion COMA lista_elementos
+    (12) expresion -> . STRING
+    (13) expresion -> . INTEGER
+    (14) expresion -> . FLOAT
+    (15) expresion -> . VARIABLE
+    (16) expresion -> . expresion_aritmetica
+    (17) expresion_aritmetica -> . expresion_aritmetica operador term
+    (18) expresion_aritmetica -> . term
+    (19) term -> . term operador factor
+    (20) term -> . factor
+    (21) factor -> . LPAREN expresion_aritmetica RPAREN
+    (22) factor -> . INTEGER
+    (23) factor -> . FLOAT
+    (24) factor -> . VARIABLE
+
+    STRING          shift and go to state 24
+    INTEGER         shift and go to state 25
+    FLOAT           shift and go to state 26
+    VARIABLE        shift and go to state 27
+    LPAREN          shift and go to state 10
+
+    expresion                      shift and go to state 42
+    lista_elementos                shift and go to state 48
+    expresion_aritmetica           shift and go to state 28
+    term                           shift and go to state 9
+    factor                         shift and go to state 11
+
+state 47
+
+    (30) declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN .
+
+    VARIABLE        reduce using rule 30 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN .)
+    ECHO            reduce using rule 30 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN .)
+    LPAREN          reduce using rule 30 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN .)
+    INTEGER         reduce using rule 30 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN .)
+    FLOAT           reduce using rule 30 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN .)
+    $end            reduce using rule 30 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN .)
+
+
+state 48
+
+    (33) lista_elementos -> expresion COMA lista_elementos .
+
+    RCOR            reduce using rule 33 (lista_elementos -> expresion COMA lista_elementos .)
+    RPAREN          reduce using rule 33 (lista_elementos -> expresion COMA lista_elementos .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for INTEGER in state 8 resolved as shift
+WARNING: shift/reduce conflict for FLOAT in state 8 resolved as shift
+WARNING: shift/reduce conflict for VARIABLE in state 8 resolved as shift
+WARNING: shift/reduce conflict for LPAREN in state 8 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 9 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 9 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 9 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 9 resolved as shift
+WARNING: shift/reduce conflict for MOD in state 9 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 32 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 32 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 32 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 32 resolved as shift
+WARNING: shift/reduce conflict for MOD in state 32 resolved as shift
+WARNING: reduce/reduce conflict in state 25 resolved using rule (expresion -> INTEGER)
+WARNING: rejected rule (factor -> INTEGER) in state 25
+WARNING: reduce/reduce conflict in state 26 resolved using rule (expresion -> FLOAT)
+WARNING: rejected rule (factor -> FLOAT) in state 26
+WARNING: reduce/reduce conflict in state 27 resolved using rule (expresion -> VARIABLE)
+WARNING: rejected rule (factor -> VARIABLE) in state 27
