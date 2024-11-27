@@ -158,8 +158,7 @@ def p_lista_elementos(p):
 def p_error(p):
     if p:
         print(f"Error de sintaxis en la línea {p.lineno}, columna {find_column(p)}, token inesperado: {p.value}")
-    else:
-        print("Error de sintaxis: fin inesperado de la entrada")
+
 
 def find_column(token):
     input = token.lexer.lexdata

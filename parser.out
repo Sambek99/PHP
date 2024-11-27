@@ -129,17 +129,21 @@ Rule 26    operador -> MINUS
 Rule 27    operador -> TIMES
 Rule 28    operador -> DIVIDE
 Rule 29    operador -> MOD
-Rule 30    declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN
-Rule 31    declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR
-Rule 32    lista_elementos -> expresion
-Rule 33    lista_elementos -> expresion COMA lista_elementos
+Rule 30    declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN RPAREN
+Rule 31    declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN
+Rule 32    declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR RCOR
+Rule 33    declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR
+Rule 34    lista_elementos -> empty
+Rule 35    lista_elementos -> expresion
+Rule 36    lista_elementos -> expresion COMA lista_elementos
+Rule 37    empty -> <empty>
 
 Terminals, with rules where they appear
 
 ABSTRACT             : 
 ADDITION_ASSIGNMENT  : 
 AND                  : 
-ARRAY                : 30
+ARRAY                : 30 31
 AS                   : 
 BOOL                 : 
 BOOLEAN              : 
@@ -149,7 +153,7 @@ CATCH                :
 CLASS                : 
 CLONE                : 
 COLON                : 
-COMA                 : 11 33
+COMA                 : 11 36
 CONCAT               : 
 CONST                : 
 DECLARE              : 
@@ -197,10 +201,10 @@ INTEGER              : 13 22
 INTERFACE            : 
 ISSET                : 
 LBRACE               : 
-LCOR                 : 31
+LCOR                 : 32 33
 LE                   : 
 LIST                 : 
-LPAREN               : 21 30
+LPAREN               : 21 30 31
 LT                   : 
 MINUS                : 26
 MOD                  : 29
@@ -223,12 +227,12 @@ PUBLIC               :
 PUNTOYCOMA           : 7
 QUESTION             : 
 RBRACE               : 
-RCOR                 : 31
+RCOR                 : 32 33
 REQUIRE              : 
 REQUIRE_ONCE         : 
 RETURN               : 
-RPAREN               : 21 30
-SIMPLE_ASSIGNMENT    : 7 30 31
+RPAREN               : 21 30 31
+SIMPLE_ASSIGNMENT    : 7 30 31 32 33
 SIMPLE_COMMENT       : 
 STATIC               : 
 STRING               : 12
@@ -243,7 +247,7 @@ TUPLE                :
 UNSET                : 
 USE                  : 
 VAR                  : 
-VARIABLE             : 7 15 24 30 31
+VARIABLE             : 7 15 24 30 31 32 33
 VERDADERO            : 
 VOID                 : 
 WHILE                : 
@@ -254,12 +258,13 @@ Nonterminals, with rules where they appear
 
 asignacion           : 3
 declarar_array       : 6
-expresion            : 7 10 11 32 33
+empty                : 34
+expresion            : 7 10 11 35 36
 expresion_aritmetica : 5 16 17 21
 expresiones          : 8 11
 factor               : 19 20
 impresion            : 4
-lista_elementos      : 30 31 33
+lista_elementos      : 31 33 36
 operador             : 17 19
 programa             : 1 0
 statement            : 1 2
@@ -281,8 +286,10 @@ state 0
     (9) impresion -> . ECHO
     (17) expresion_aritmetica -> . expresion_aritmetica operador term
     (18) expresion_aritmetica -> . term
-    (30) declarar_array -> . VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN
-    (31) declarar_array -> . VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR
+    (30) declarar_array -> . VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN RPAREN
+    (31) declarar_array -> . VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN
+    (32) declarar_array -> . VARIABLE SIMPLE_ASSIGNMENT LCOR RCOR
+    (33) declarar_array -> . VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR
     (19) term -> . term operador factor
     (20) term -> . factor
     (21) factor -> . LPAREN expresion_aritmetica RPAREN
@@ -326,8 +333,10 @@ state 2
     (9) impresion -> . ECHO
     (17) expresion_aritmetica -> . expresion_aritmetica operador term
     (18) expresion_aritmetica -> . term
-    (30) declarar_array -> . VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN
-    (31) declarar_array -> . VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR
+    (30) declarar_array -> . VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN RPAREN
+    (31) declarar_array -> . VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN
+    (32) declarar_array -> . VARIABLE SIMPLE_ASSIGNMENT LCOR RCOR
+    (33) declarar_array -> . VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR
     (19) term -> . term operador factor
     (20) term -> . factor
     (21) factor -> . LPAREN expresion_aritmetica RPAREN
@@ -414,8 +423,10 @@ state 6
 state 7
 
     (7) asignacion -> VARIABLE . SIMPLE_ASSIGNMENT expresion PUNTOYCOMA
-    (30) declarar_array -> VARIABLE . SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN
-    (31) declarar_array -> VARIABLE . SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR
+    (30) declarar_array -> VARIABLE . SIMPLE_ASSIGNMENT ARRAY LPAREN RPAREN
+    (31) declarar_array -> VARIABLE . SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN
+    (32) declarar_array -> VARIABLE . SIMPLE_ASSIGNMENT LCOR RCOR
+    (33) declarar_array -> VARIABLE . SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR
     (24) factor -> VARIABLE .
 
     SIMPLE_ASSIGNMENT shift and go to state 21
@@ -676,8 +687,10 @@ state 20
 state 21
 
     (7) asignacion -> VARIABLE SIMPLE_ASSIGNMENT . expresion PUNTOYCOMA
-    (30) declarar_array -> VARIABLE SIMPLE_ASSIGNMENT . ARRAY LPAREN lista_elementos RPAREN
-    (31) declarar_array -> VARIABLE SIMPLE_ASSIGNMENT . LCOR lista_elementos RCOR
+    (30) declarar_array -> VARIABLE SIMPLE_ASSIGNMENT . ARRAY LPAREN RPAREN
+    (31) declarar_array -> VARIABLE SIMPLE_ASSIGNMENT . ARRAY LPAREN lista_elementos RPAREN
+    (32) declarar_array -> VARIABLE SIMPLE_ASSIGNMENT . LCOR RCOR
+    (33) declarar_array -> VARIABLE SIMPLE_ASSIGNMENT . LCOR lista_elementos RCOR
     (12) expresion -> . STRING
     (13) expresion -> . INTEGER
     (14) expresion -> . FLOAT
@@ -1007,16 +1020,20 @@ state 33
 
 state 34
 
-    (30) declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY . LPAREN lista_elementos RPAREN
+    (30) declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY . LPAREN RPAREN
+    (31) declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY . LPAREN lista_elementos RPAREN
 
     LPAREN          shift and go to state 40
 
 
 state 35
 
-    (31) declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR . lista_elementos RCOR
-    (32) lista_elementos -> . expresion
-    (33) lista_elementos -> . expresion COMA lista_elementos
+    (32) declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR . RCOR
+    (33) declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR . lista_elementos RCOR
+    (34) lista_elementos -> . empty
+    (35) lista_elementos -> . expresion
+    (36) lista_elementos -> . expresion COMA lista_elementos
+    (37) empty -> .
     (12) expresion -> . STRING
     (13) expresion -> . INTEGER
     (14) expresion -> . FLOAT
@@ -1031,14 +1048,19 @@ state 35
     (23) factor -> . FLOAT
     (24) factor -> . VARIABLE
 
+  ! shift/reduce conflict for RCOR resolved as shift
+    RCOR            shift and go to state 41
     STRING          shift and go to state 24
     INTEGER         shift and go to state 25
     FLOAT           shift and go to state 26
     VARIABLE        shift and go to state 27
     LPAREN          shift and go to state 10
 
-    lista_elementos                shift and go to state 41
-    expresion                      shift and go to state 42
+  ! RCOR            [ reduce using rule 37 (empty -> .) ]
+
+    lista_elementos                shift and go to state 42
+    empty                          shift and go to state 43
+    expresion                      shift and go to state 44
     expresion_aritmetica           shift and go to state 28
     term                           shift and go to state 9
     factor                         shift and go to state 11
@@ -1069,7 +1091,7 @@ state 36
     LPAREN          shift and go to state 10
 
     expresion                      shift and go to state 23
-    expresiones                    shift and go to state 43
+    expresiones                    shift and go to state 45
     expresion_aritmetica           shift and go to state 28
     term                           shift and go to state 9
     factor                         shift and go to state 11
@@ -1130,9 +1152,12 @@ state 39
 
 state 40
 
-    (30) declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN . lista_elementos RPAREN
-    (32) lista_elementos -> . expresion
-    (33) lista_elementos -> . expresion COMA lista_elementos
+    (30) declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN . RPAREN
+    (31) declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN . lista_elementos RPAREN
+    (34) lista_elementos -> . empty
+    (35) lista_elementos -> . expresion
+    (36) lista_elementos -> . expresion COMA lista_elementos
+    (37) empty -> .
     (12) expresion -> . STRING
     (13) expresion -> . INTEGER
     (14) expresion -> . FLOAT
@@ -1147,36 +1172,61 @@ state 40
     (23) factor -> . FLOAT
     (24) factor -> . VARIABLE
 
+  ! shift/reduce conflict for RPAREN resolved as shift
+    RPAREN          shift and go to state 46
     STRING          shift and go to state 24
     INTEGER         shift and go to state 25
     FLOAT           shift and go to state 26
     VARIABLE        shift and go to state 27
     LPAREN          shift and go to state 10
 
-    lista_elementos                shift and go to state 44
-    expresion                      shift and go to state 42
+  ! RPAREN          [ reduce using rule 37 (empty -> .) ]
+
+    lista_elementos                shift and go to state 47
+    empty                          shift and go to state 43
+    expresion                      shift and go to state 44
     expresion_aritmetica           shift and go to state 28
     term                           shift and go to state 9
     factor                         shift and go to state 11
 
 state 41
 
-    (31) declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos . RCOR
+    (32) declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR RCOR .
 
-    RCOR            shift and go to state 45
+    VARIABLE        reduce using rule 32 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR RCOR .)
+    ECHO            reduce using rule 32 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR RCOR .)
+    LPAREN          reduce using rule 32 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR RCOR .)
+    INTEGER         reduce using rule 32 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR RCOR .)
+    FLOAT           reduce using rule 32 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR RCOR .)
+    $end            reduce using rule 32 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR RCOR .)
 
 
 state 42
 
-    (32) lista_elementos -> expresion .
-    (33) lista_elementos -> expresion . COMA lista_elementos
+    (33) declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos . RCOR
 
-    RCOR            reduce using rule 32 (lista_elementos -> expresion .)
-    RPAREN          reduce using rule 32 (lista_elementos -> expresion .)
-    COMA            shift and go to state 46
+    RCOR            shift and go to state 48
 
 
 state 43
+
+    (34) lista_elementos -> empty .
+
+    RCOR            reduce using rule 34 (lista_elementos -> empty .)
+    RPAREN          reduce using rule 34 (lista_elementos -> empty .)
+
+
+state 44
+
+    (35) lista_elementos -> expresion .
+    (36) lista_elementos -> expresion . COMA lista_elementos
+
+    RCOR            reduce using rule 35 (lista_elementos -> expresion .)
+    RPAREN          reduce using rule 35 (lista_elementos -> expresion .)
+    COMA            shift and go to state 49
+
+
+state 45
 
     (11) expresiones -> expresion COMA expresiones .
 
@@ -1188,30 +1238,44 @@ state 43
     $end            reduce using rule 11 (expresiones -> expresion COMA expresiones .)
 
 
-state 44
-
-    (30) declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos . RPAREN
-
-    RPAREN          shift and go to state 47
-
-
-state 45
-
-    (31) declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR .
-
-    VARIABLE        reduce using rule 31 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR .)
-    ECHO            reduce using rule 31 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR .)
-    LPAREN          reduce using rule 31 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR .)
-    INTEGER         reduce using rule 31 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR .)
-    FLOAT           reduce using rule 31 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR .)
-    $end            reduce using rule 31 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR .)
-
-
 state 46
 
-    (33) lista_elementos -> expresion COMA . lista_elementos
-    (32) lista_elementos -> . expresion
-    (33) lista_elementos -> . expresion COMA lista_elementos
+    (30) declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN RPAREN .
+
+    VARIABLE        reduce using rule 30 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN RPAREN .)
+    ECHO            reduce using rule 30 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN RPAREN .)
+    LPAREN          reduce using rule 30 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN RPAREN .)
+    INTEGER         reduce using rule 30 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN RPAREN .)
+    FLOAT           reduce using rule 30 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN RPAREN .)
+    $end            reduce using rule 30 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN RPAREN .)
+
+
+state 47
+
+    (31) declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos . RPAREN
+
+    RPAREN          shift and go to state 50
+
+
+state 48
+
+    (33) declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR .
+
+    VARIABLE        reduce using rule 33 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR .)
+    ECHO            reduce using rule 33 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR .)
+    LPAREN          reduce using rule 33 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR .)
+    INTEGER         reduce using rule 33 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR .)
+    FLOAT           reduce using rule 33 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR .)
+    $end            reduce using rule 33 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR .)
+
+
+state 49
+
+    (36) lista_elementos -> expresion COMA . lista_elementos
+    (34) lista_elementos -> . empty
+    (35) lista_elementos -> . expresion
+    (36) lista_elementos -> . expresion COMA lista_elementos
+    (37) empty -> .
     (12) expresion -> . STRING
     (13) expresion -> . INTEGER
     (14) expresion -> . FLOAT
@@ -1226,36 +1290,39 @@ state 46
     (23) factor -> . FLOAT
     (24) factor -> . VARIABLE
 
+    RCOR            reduce using rule 37 (empty -> .)
+    RPAREN          reduce using rule 37 (empty -> .)
     STRING          shift and go to state 24
     INTEGER         shift and go to state 25
     FLOAT           shift and go to state 26
     VARIABLE        shift and go to state 27
     LPAREN          shift and go to state 10
 
-    expresion                      shift and go to state 42
-    lista_elementos                shift and go to state 48
+    expresion                      shift and go to state 44
+    lista_elementos                shift and go to state 51
+    empty                          shift and go to state 43
     expresion_aritmetica           shift and go to state 28
     term                           shift and go to state 9
     factor                         shift and go to state 11
 
-state 47
+state 50
 
-    (30) declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN .
+    (31) declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN .
 
-    VARIABLE        reduce using rule 30 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN .)
-    ECHO            reduce using rule 30 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN .)
-    LPAREN          reduce using rule 30 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN .)
-    INTEGER         reduce using rule 30 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN .)
-    FLOAT           reduce using rule 30 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN .)
-    $end            reduce using rule 30 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN .)
+    VARIABLE        reduce using rule 31 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN .)
+    ECHO            reduce using rule 31 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN .)
+    LPAREN          reduce using rule 31 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN .)
+    INTEGER         reduce using rule 31 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN .)
+    FLOAT           reduce using rule 31 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN .)
+    $end            reduce using rule 31 (declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN .)
 
 
-state 48
+state 51
 
-    (33) lista_elementos -> expresion COMA lista_elementos .
+    (36) lista_elementos -> expresion COMA lista_elementos .
 
-    RCOR            reduce using rule 33 (lista_elementos -> expresion COMA lista_elementos .)
-    RPAREN          reduce using rule 33 (lista_elementos -> expresion COMA lista_elementos .)
+    RCOR            reduce using rule 36 (lista_elementos -> expresion COMA lista_elementos .)
+    RPAREN          reduce using rule 36 (lista_elementos -> expresion COMA lista_elementos .)
 
 WARNING: 
 WARNING: Conflicts:
@@ -1274,6 +1341,8 @@ WARNING: shift/reduce conflict for MINUS in state 32 resolved as shift
 WARNING: shift/reduce conflict for TIMES in state 32 resolved as shift
 WARNING: shift/reduce conflict for DIVIDE in state 32 resolved as shift
 WARNING: shift/reduce conflict for MOD in state 32 resolved as shift
+WARNING: shift/reduce conflict for RCOR in state 35 resolved as shift
+WARNING: shift/reduce conflict for RPAREN in state 40 resolved as shift
 WARNING: reduce/reduce conflict in state 25 resolved using rule (expresion -> INTEGER)
 WARNING: rejected rule (factor -> INTEGER) in state 25
 WARNING: reduce/reduce conflict in state 26 resolved using rule (expresion -> FLOAT)
