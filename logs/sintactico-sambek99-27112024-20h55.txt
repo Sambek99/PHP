@@ -1,0 +1,3 @@
+Generación de log iniciada.
+STOP
+None

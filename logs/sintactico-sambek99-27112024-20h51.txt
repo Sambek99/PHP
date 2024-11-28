@@ -1,0 +1,2 @@
+Generación de log iniciada.
+$var = 8

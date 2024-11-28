@@ -1,0 +1,3 @@
+Generación de log iniciada.
+$var = 5
+None
