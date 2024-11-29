@@ -108,6 +108,16 @@ tokens = (
     'DOLAR',
     'VERDADERO',
     'FALSO',
+    'QUEUE',
+    'STACK',
+    'MAP',
+    'GRAPH',
+    'SET',
+
+    'BREAK',
+    'CONTINUE',
+    'LAMBDA',
+    'IN',
     
 # STEVEN FIN  
 # ARIANA INICIO
@@ -148,6 +158,16 @@ t_RBRACE = r'\}'
 t_PUNTOYCOMA = r';'
 
 # STEVEN INICIO 
+t_QUEUE = r'queue'
+t_STACK = r'stack'
+t_MAP = r'map'
+t_GRAPH = r'graph'
+t_SET = r'set'
+t_BREAK = r'break'
+t_CONTINUE = r'continue'
+t_LAMBDA = r'lambda'
+t_IN = r'in'
+
 t_NOT = r'!'
 t_SIMPLE_ASSIGNMENT = r'='
 t_ADDITION_ASSIGNMENT = r'\+='
@@ -188,14 +208,18 @@ def t_RESERVED(t):
     return t
 
 def t_STRING(t):
-    r'"[^"\n]*" | \'[^\'\n]*'  # Expresión regular corregida para cadenas
+    r'"[^"\n]" | \'[^\'\n]\''  # Expresión regular corregida para cadenas
     t.value = t.value[1:-1]  # Eliminar las comillas    
     return t
 
 def t_VARIABLE(t):
-    # r'\$[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*'  # Expresión regular corregida para variables
-    r'\$[a-zA-Z_][a-zA-Z_0-9]*'         
-    t.type = reserved.get(t.value, 'VARIABLE')  # Si es palabra reservada, asigna el tipo adecuado
+    r'\$[a-zA-Z_][a-zA-Z0-9_]*'  # Detecta variables PHP correctamente
+    return t
+
+
+def t_IDENTIFIER(t):
+    r'[a-zA-Z_][a-zA-Z0-9_]*'
+    t.type = reserved.get(t.value, 'VARIABLE')  # Verificar si es palabra reservada
     return t
 
 def t_FLOAT(t):
@@ -238,16 +262,15 @@ t_ignore = ' \t'
 # Error handling rule
 
 def t_error(t):
-    error_message = f"Illegal character '{t.value[0]}' at line {t.lexer.lineno}"
-    lexer.errors.append(error_message)
-    print(error_message)  # Manejo de errores más detallado
+    print(f"Illegal character '{t.value[0]}' at line {t.lineno}, position {t.lexpos}")
     t.lexer.skip(1)
+    
 # GAONA FIN
 
 # STEVEN INICIO  
 # Ignorar comentarios de una línea (// o #) y comentarios de múltiples líneas (/* ... */)
 def t_SIMPLE_COMMENT(t):
-    r'//.*|\#.*'
+    r'//.|\#.'
     pass  # Ignorar los comentarios
     if t.value.startswith("//"):
         t.value = t.value[2:].strip()  # Elimina '//' y los espacios en blanco al inicio y al final
@@ -256,7 +279,7 @@ def t_SIMPLE_COMMENT(t):
     return t
 
 def t_MULTIPLE_COMMENT(t):
-    r'/\*[\s\S]*?\*/'
+    r'/\[\s\S]?\*/'
     pass  # Ignorar los comentarios 
     t.value = t.value.replace('\n', ' ').replace('\r', ' ')  # Reemplaza los saltos de línea con espacios
     t.value = t.value[2:-2].strip()  # Devuelve el token del comentario múltiple sin '/*    */'
@@ -267,6 +290,7 @@ def t_TUPLE(t):
     return t
 
 
+
 # STEVEN FIN  
 
 # Construir el lexer
@@ -274,45 +298,18 @@ lexer = lex.lex()
 lexer.errors = []
 # Test it out
 
-"""
 
-
-data2 = '''
-$array = array(1, 2, 3);
-
-"SOY STEVEN" #TENGO 24
-3 + 4 * 10 if || % &&
-  + -20 *2 3.5 2 {} , ; $hola "HOla" 4%5
-// hola 
- #hola
-/*
-125 hola
-*/
-/*23 holsf
-fdfh
-hfdhf*/
-/* 25 */
-t=25
-1 == 1
-
-
-'''
+data = "$dgdg=185;"
 
 
 
-# Darle al lexer una entrada
-lexer.input(data2)
+lexer.input(data)
 
-
-# Tokenizar
 while True:
     tok = lexer.token()
     if not tok:
-        break  # No hay más entrada
-    print(tok)  # Muestra los tokens
-
-"""
-
+        break
+    print(f"Token: {tok.type}, Valor: {tok.value}, Línea: {tok.lineno}")
 
 # ARIANA INICIO
 
@@ -357,5 +354,3 @@ with open(log_filepath, "w") as log_file:
             log_file.write(f"Error: {error}\n")
 
 # ARIANA FIN
-
-
