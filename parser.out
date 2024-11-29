@@ -10,7 +10,6 @@ Unused terminals:
     BOOL
     BOOLEAN
     CALLABLE
-    CASE
     CATCH
     CLASS
     CLONE
@@ -87,64 +86,73 @@ Unused terminals:
 
 Grammar
 
-Rule 0     S' -> programa
-Rule 1     programa -> statement programa
-Rule 2     programa -> statement
-Rule 3     statement -> impresion
-Rule 4     statement -> solicitud_datos
-Rule 5     statement -> expresion_aritmetica
-Rule 6     statement -> asignacion
-Rule 7     statement -> declaracion_estructura
-Rule 8     statement -> condicion
-Rule 9     impresion -> ECHO expresiones PUNTOYCOMA
-Rule 10    impresion -> ECHO PUNTOYCOMA
-Rule 11    expresiones -> expresion
-Rule 12    expresiones -> expresion COMA expresiones
-Rule 13    solicitud_datos -> VARIABLE SIMPLE_ASSIGNMENT INPUT LPAREN STRING RPAREN PUNTOYCOMA
-Rule 14    expresion_aritmetica -> expresion_aritmetica operador term
-Rule 15    expresion_aritmetica -> term
-Rule 16    term -> term operador factor
-Rule 17    term -> factor
-Rule 18    factor -> LPAREN expresion_aritmetica RPAREN
-Rule 19    factor -> INTEGER
-Rule 20    factor -> FLOAT
-Rule 21    factor -> VARIABLE
-Rule 22    operador -> PLUS
-Rule 23    operador -> MINUS
-Rule 24    operador -> TIMES
-Rule 25    operador -> DIVIDE
-Rule 26    operador -> MOD
-Rule 27    condicion -> IF LPAREN expresion RPAREN LBRACE programa RBRACE
-Rule 28    condicion -> IF LPAREN expresion RPAREN LBRACE programa RBRACE ELSE LBRACE programa RBRACE
-Rule 29    asignacion -> VARIABLE SIMPLE_ASSIGNMENT expresion PUNTOYCOMA
-Rule 30    declaracion_estructura -> VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR PUNTOYCOMA
-Rule 31    declaracion_estructura -> VARIABLE SIMPLE_ASSIGNMENT LCOR RCOR PUNTOYCOMA
-Rule 32    lista_elementos -> expresion
-Rule 33    lista_elementos -> expresion COMA lista_elementos
-Rule 34    declarar_cola -> VARIABLE SIMPLE_ASSIGNMENT QUEUE LPAREN RPAREN
-Rule 35    declarar_pila -> VARIABLE SIMPLE_ASSIGNMENT STACK LPAREN RPAREN
-Rule 36    declarar_mapa -> VARIABLE SIMPLE_ASSIGNMENT MAP LPAREN RPAREN
-Rule 37    declarar_grafo -> VARIABLE SIMPLE_ASSIGNMENT GRAPH LPAREN RPAREN
-Rule 38    declarar_conjunto -> VARIABLE SIMPLE_ASSIGNMENT SET LPAREN RPAREN
-Rule 39    declarar_diccionario_valores -> VARIABLE SIMPLE_ASSIGNMENT LBRACE pares RBRACE
-Rule 40    switch_case -> SWITCH LPAREN expresion RPAREN LBRACE cases RBRACE
-Rule 41    break -> BREAK PUNTOYCOMA
-Rule 42    for_each -> FOR LPAREN VARIABLE IN VARIABLE RPAREN LBRACE programa RBRACE
-Rule 43    do_while -> DO LBRACE programa RBRACE WHILE LPAREN expresion RPAREN PUNTOYCOMA
-Rule 44    switch_case_default -> SWITCH LPAREN expresion RPAREN LBRACE cases DEFAULT COLON programa RBRACE
-Rule 45    continue -> CONTINUE PUNTOYCOMA
-Rule 46    funcion_parametros_opcionales -> FUNCTION VARIABLE LPAREN VARIABLE EQUAL expresion RPAREN LBRACE programa RBRACE
-Rule 47    funcion_lambda -> VARIABLE SIMPLE_ASSIGNMENT LAMBDA LPAREN parametros RPAREN COLON expresion
-Rule 48    funcion_recursiva -> FUNCTION VARIABLE LPAREN parametros RPAREN LBRACE llamada_funcion RBRACE
-Rule 49    funcion_con_retorno -> FUNCTION VARIABLE LPAREN parametros RPAREN LBRACE RETURN expresion PUNTOYCOMA RBRACE
-Rule 50    funcion_multiples_retornos -> FUNCTION VARIABLE LPAREN parametros RPAREN LBRACE RETURN LCOR expresiones RCOR PUNTOYCOMA RBRACE
-Rule 51    funcion_sobrecarga -> FUNCTION VARIABLE LPAREN parametros RPAREN LBRACE programa RBRACE
-Rule 52    funcion_sobrecarga -> FUNCTION VARIABLE LPAREN RPAREN LBRACE programa RBRACE
-Rule 53    expresion -> STRING
-Rule 54    expresion -> INTEGER
-Rule 55    expresion -> FLOAT
-Rule 56    expresion -> VARIABLE
-Rule 57    empty -> <empty>
+Rule 0     S' -> parametros
+Rule 1     parametros -> VARIABLE
+Rule 2     parametros -> VARIABLE COMA parametros
+Rule 3     cases -> CASE expresion COLON programa
+Rule 4     cases -> CASE expresion COLON programa cases
+Rule 5     pares -> STRING COLON expresion
+Rule 6     pares -> STRING COLON expresion COMA pares
+Rule 7     llamada_funcion -> VARIABLE LPAREN parametros RPAREN
+Rule 8     statement -> asignacion
+Rule 9     statement -> impresion
+Rule 10    statement -> solicitud_datos
+Rule 11    statement -> expresion_aritmetica
+Rule 12    statement -> declaracion_estructura
+Rule 13    statement -> condicion
+Rule 14    programa -> statement programa
+Rule 15    programa -> statement
+Rule 16    impresion -> ECHO expresiones PUNTOYCOMA
+Rule 17    impresion -> ECHO PUNTOYCOMA
+Rule 18    expresiones -> expresion
+Rule 19    expresiones -> expresion COMA expresiones
+Rule 20    solicitud_datos -> VARIABLE SIMPLE_ASSIGNMENT INPUT LPAREN STRING RPAREN PUNTOYCOMA
+Rule 21    expresion_aritmetica -> expresion_aritmetica operador term
+Rule 22    expresion_aritmetica -> term
+Rule 23    term -> term operador factor
+Rule 24    term -> factor
+Rule 25    factor -> LPAREN expresion_aritmetica RPAREN
+Rule 26    factor -> INTEGER
+Rule 27    factor -> FLOAT
+Rule 28    factor -> VARIABLE
+Rule 29    operador -> PLUS
+Rule 30    operador -> MINUS
+Rule 31    operador -> TIMES
+Rule 32    operador -> DIVIDE
+Rule 33    operador -> MOD
+Rule 34    condicion -> IF LPAREN expresion RPAREN LBRACE programa RBRACE
+Rule 35    condicion -> IF LPAREN expresion RPAREN LBRACE programa RBRACE ELSE LBRACE programa RBRACE
+Rule 36    asignacion -> VARIABLE SIMPLE_ASSIGNMENT expresion PUNTOYCOMA
+Rule 37    declaracion_estructura -> VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR PUNTOYCOMA
+Rule 38    declaracion_estructura -> VARIABLE SIMPLE_ASSIGNMENT LCOR RCOR PUNTOYCOMA
+Rule 39    lista_elementos -> expresion
+Rule 40    lista_elementos -> expresion COMA lista_elementos
+Rule 41    declarar_cola -> VARIABLE SIMPLE_ASSIGNMENT QUEUE LPAREN RPAREN
+Rule 42    declarar_pila -> VARIABLE SIMPLE_ASSIGNMENT STACK LPAREN RPAREN
+Rule 43    declarar_mapa -> VARIABLE SIMPLE_ASSIGNMENT MAP LPAREN RPAREN
+Rule 44    declarar_grafo -> VARIABLE SIMPLE_ASSIGNMENT GRAPH LPAREN RPAREN
+Rule 45    declarar_conjunto -> VARIABLE SIMPLE_ASSIGNMENT SET LPAREN RPAREN
+Rule 46    declarar_diccionario_valores -> VARIABLE SIMPLE_ASSIGNMENT LBRACE pares RBRACE
+Rule 47    switch_case -> SWITCH LPAREN expresion RPAREN LBRACE cases DEFAULT COLON programa RBRACE
+Rule 48    switch_case -> SWITCH LPAREN expresion RPAREN LBRACE cases RBRACE
+Rule 49    break -> BREAK PUNTOYCOMA
+Rule 50    for_each -> FOR LPAREN VARIABLE IN VARIABLE RPAREN LBRACE programa RBRACE
+Rule 51    do_while -> DO LBRACE programa RBRACE WHILE LPAREN expresion RPAREN PUNTOYCOMA
+Rule 52    switch_case_default -> SWITCH LPAREN expresion RPAREN LBRACE cases DEFAULT COLON programa RBRACE
+Rule 53    continue -> CONTINUE PUNTOYCOMA
+Rule 54    funcion_parametros_opcionales -> FUNCTION VARIABLE LPAREN parametros RPAREN LBRACE programa RBRACE
+Rule 55    funcion_parametros_opcionales -> FUNCTION VARIABLE LPAREN RPAREN LBRACE programa RBRACE
+Rule 56    funcion_lambda -> VARIABLE SIMPLE_ASSIGNMENT LAMBDA LPAREN parametros RPAREN COLON expresion
+Rule 57    funcion_recursiva -> FUNCTION VARIABLE LPAREN parametros RPAREN LBRACE llamada_funcion RBRACE
+Rule 58    funcion_con_retorno -> FUNCTION VARIABLE LPAREN parametros RPAREN LBRACE RETURN expresion PUNTOYCOMA RBRACE
+Rule 59    funcion_multiples_retornos -> FUNCTION VARIABLE LPAREN parametros RPAREN LBRACE RETURN LCOR expresiones RCOR PUNTOYCOMA RBRACE
+Rule 60    funcion_sobrecarga -> FUNCTION VARIABLE LPAREN parametros RPAREN LBRACE programa RBRACE
+Rule 61    funcion_sobrecarga -> FUNCTION VARIABLE LPAREN RPAREN LBRACE programa RBRACE
+Rule 62    expresion -> STRING
+Rule 63    expresion -> INTEGER
+Rule 64    expresion -> FLOAT
+Rule 65    expresion -> VARIABLE
+Rule 66    empty -> <empty>
 
 Terminals, with rules where they appear
 
@@ -155,25 +163,27 @@ ARRAY                :
 AS                   : 
 BOOL                 : 
 BOOLEAN              : 
+BREAK                : 49
 CALLABLE             : 
-CASE                 : 
+CASE                 : 3 4
 CATCH                : 
 CLASS                : 
 CLONE                : 
-COLON                : 44 47
-COMA                 : 12 33
+COLON                : 3 4 5 6 47 52 56
+COMA                 : 2 6 19 40
 CONCAT               : 
 CONST                : 
+CONTINUE             : 53
 DECLARE              : 
 DECREMENT            : 
-DEFAULT              : 44
+DEFAULT              : 47 52
 DIE                  : 
-DIVIDE               : 25
+DIVIDE               : 32
 DIVISION_ASSIGNMENT  : 
-DO                   : 43
+DO                   : 51
 DOLAR                : 
-ECHO                 : 9 10
-ELSE                 : 28
+ECHO                 : 16 17
+ELSE                 : 35
 ELSEIF               : 
 EMPTY                : 
 ENDFOR               : 
@@ -188,34 +198,38 @@ FALSE                :
 FALSO                : 
 FINAL                : 
 FINALLY              : 
-FLOAT                : 20 55
-FOR                  : 42
+FLOAT                : 27 64
+FOR                  : 50
 FOREACH              : 
-FUNCTION             : 46 48 49 50 51 52
+FUNCTION             : 54 55 57 58 59 60 61
 GE                   : 
 GLOBAL               : 
 GOTO                 : 
+GRAPH                : 44
 GT                   : 
 IDENTICAL            : 
-IF                   : 27 28
+IF                   : 34 35
 IMPLEMENTS           : 
+IN                   : 50
 INCLUDE              : 
 INCLUDE_ONCE         : 
 INCREMENT            : 
-INPUT                : 13
+INPUT                : 20
 INSTANCEOF           : 
 INT                  : 
-INTEGER              : 19 54
+INTEGER              : 26 63
 INTERFACE            : 
 ISSET                : 
-LBRACE               : 27 28 28 39 40 42 43 44 46 48 49 50 51 52
-LCOR                 : 30 31 50
+LAMBDA               : 56
+LBRACE               : 34 35 35 46 47 48 50 51 52 54 55 57 58 59 60 61
+LCOR                 : 37 38 59
 LE                   : 
 LIST                 : 
-LPAREN               : 13 18 27 28 34 35 36 37 38 40 42 43 44 46 47 48 49 50 51 52
+LPAREN               : 7 20 25 34 35 41 42 43 44 45 47 48 50 51 52 54 55 56 57 58 59 60 61
 LT                   : 
-MINUS                : 23
-MOD                  : 26
+MAP                  : 43
+MINUS                : 30
+MOD                  : 33
 MOD_ASSIGNMENT       : 
 MULTIPLE_COMMENT     : 
 MULTIPLICATION_ASSIGNMENT : 
@@ -227,27 +241,30 @@ NOT_IDENTICAL        :
 NULL                 : 
 OBJECT               : 
 OR                   : 
-PLUS                 : 22
+PLUS                 : 29
 PRINT                : 
 PRIVATE              : 
 PROTECTED            : 
 PUBLIC               : 
-PUNTOYCOMA           : 9 10 13 29 30 31 41 43 45 49 50
+PUNTOYCOMA           : 16 17 20 36 37 38 49 51 53 58 59
 QUESTION             : 
-RBRACE               : 27 28 28 39 40 42 43 44 46 48 49 50 51 52
-RCOR                 : 30 31 50
+QUEUE                : 41
+RBRACE               : 34 35 35 46 47 48 50 51 52 54 55 57 58 59 60 61
+RCOR                 : 37 38 59
 REQUIRE              : 
 REQUIRE_ONCE         : 
-RETURN               : 49 50
-RPAREN               : 13 18 27 28 34 35 36 37 38 40 42 43 44 46 47 48 49 50 51 52
-SIMPLE_ASSIGNMENT    : 13 29 30 31 34 35 36 37 38 39 47
+RETURN               : 58 59
+RPAREN               : 7 20 25 34 35 41 42 43 44 45 47 48 50 51 52 54 55 56 57 58 59 60 61
+SET                  : 45
+SIMPLE_ASSIGNMENT    : 20 36 37 38 41 42 43 44 45 46 56
 SIMPLE_COMMENT       : 
+STACK                : 42
 STATIC               : 
-STRING               : 13 53
+STRING               : 5 6 20 62
 SUBTRACTION_ASSIGNMENT : 
-SWITCH               : 40 44
+SWITCH               : 47 48 52
 THROW                : 
-TIMES                : 24
+TIMES                : 31
 TRAIT                : 
 TRUE                 : 
 TRY                  : 
@@ -255,31 +272,21 @@ TUPLE                :
 UNSET                : 
 USE                  : 
 VAR                  : 
-VARIABLE             : 13 21 29 30 31 34 35 36 37 38 39 42 42 46 46 47 48 49 50 51 52 56
+VARIABLE             : 1 2 7 20 28 36 37 38 41 42 43 44 45 46 50 50 54 55 56 57 58 59 60 61 65
 VERDADERO            : 
 VOID                 : 
-WHILE                : 43
+WHILE                : 51
 YIELD                : 
 error                : 
 
 Nonterminals, with rules where they appear
 
-BREAK                : 41
-CONTINUE             : 45
-EQUAL                : 46
-GRAPH                : 37
-IN                   : 42
-LAMBDA               : 47
-MAP                  : 36
-QUEUE                : 34
-SET                  : 38
-STACK                : 35
-asignacion           : 6
+asignacion           : 8
 break                : 
-cases                : 40 44
-condicion            : 8
+cases                : 4 47 48 52
+condicion            : 13
 continue             : 
-declaracion_estructura : 7
+declaracion_estructura : 12
 declarar_cola        : 
 declarar_conjunto    : 
 declarar_diccionario_valores : 
@@ -288,10 +295,10 @@ declarar_mapa        :
 declarar_pila        : 
 do_while             : 
 empty                : 
-expresion            : 11 12 27 28 29 32 33 40 43 44 46 47 49
-expresion_aritmetica : 5 14 18
-expresiones          : 9 12 50
-factor               : 16 17
+expresion            : 3 4 5 6 18 19 34 35 36 39 40 47 48 51 52 56 58
+expresion_aritmetica : 11 21 25
+expresiones          : 16 19 59
+factor               : 23 24
 for_each             : 
 funcion_con_retorno  : 
 funcion_lambda       : 
@@ -299,16 +306,59 @@ funcion_multiples_retornos :
 funcion_parametros_opcionales : 
 funcion_recursiva    : 
 funcion_sobrecarga   : 
-impresion            : 3
-lista_elementos      : 30 33
-llamada_funcion      : 48
-operador             : 14 16
-parametros           : 47 48 49 50 51
-pares                : 39
-programa             : 1 27 28 28 42 43 44 46 51 52 0
-solicitud_datos      : 4
-statement            : 1 2
+impresion            : 9
+lista_elementos      : 37 40
+llamada_funcion      : 57
+operador             : 21 23
+parametros           : 2 7 54 56 57 58 59 60 0
+pares                : 6 46
+programa             : 3 4 14 34 35 35 47 50 51 52 54 55 60 61
+solicitud_datos      : 10
+statement            : 14 15
 switch_case          : 
 switch_case_default  : 
-term                 : 14 15 16
+term                 : 21 22 23
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . parametros
+    (1) parametros -> . VARIABLE
+    (2) parametros -> . VARIABLE COMA parametros
+
+    VARIABLE        shift and go to state 2
+
+    parametros                     shift and go to state 1
+
+state 1
+
+    (0) S' -> parametros .
+
+
+
+state 2
+
+    (1) parametros -> VARIABLE .
+    (2) parametros -> VARIABLE . COMA parametros
+
+    $end            reduce using rule 1 (parametros -> VARIABLE .)
+    COMA            shift and go to state 3
+
+
+state 3
+
+    (2) parametros -> VARIABLE COMA . parametros
+    (1) parametros -> . VARIABLE
+    (2) parametros -> . VARIABLE COMA parametros
+
+    VARIABLE        shift and go to state 2
+
+    parametros                     shift and go to state 4
+
+state 4
+
+    (2) parametros -> VARIABLE COMA parametros .
+
+    $end            reduce using rule 2 (parametros -> VARIABLE COMA parametros .)
 

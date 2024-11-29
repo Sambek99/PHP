@@ -1,6 +1,7 @@
 import ply.lex as lex
 import time
 import os
+import re
 
 # List of token names.   This is always required
 # GAONA Y STEVEN DEFINICION DE TOKENS PARA POSTERIOR DEFINICION DE REGLAS
@@ -213,7 +214,7 @@ def t_STRING(t):
     return t
 
 def t_VARIABLE(t):
-    r'\$[a-zA-Z_][a-zA-Z0-9_]*'  # Detecta variables PHP correctamente
+    r'^\$[a-zA-Z_][a-zA-Z0-9_]*'  # La variable debe empezar con $
     return t
 
 
@@ -299,7 +300,7 @@ lexer.errors = []
 # Test it out
 
 
-data = "$dgdg=185;"
+data = "efdf"
 
 
 
@@ -354,3 +355,12 @@ with open(log_filepath, "w") as log_file:
             log_file.write(f"Error: {error}\n")
 
 # ARIANA FIN
+
+def getListaTokens(lexer,lista):
+    while True:
+        tok =  lexer.token()
+        if not tok:
+            break
+        lista.append(tok)
+def getAnalizadorLexico():
+    return lex.lex()

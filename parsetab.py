@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'ABSTRACT ADDITION_ASSIGNMENT AND ARRAY AS BOOL BOOLEAN CALLABLE CASE CATCH CLASS CLONE COLON COMA CONCAT CONST DECLARE DECREMENT DEFAULT DIE DIVIDE DIVISION_ASSIGNMENT DO DOLAR ECHO ELSE ELSEIF EMPTY ENDFOR ENDFOREACH ENDIF ENDSWITCH ENDWHILE EQ EXIT EXTENDS FALSE FALSO FINAL FINALLY FLOAT FOR FOREACH FUNCTION GE GLOBAL GOTO GT IDENTICAL IF IMPLEMENTS INCLUDE INCLUDE_ONCE INCREMENT INPUT INSTANCEOF INT INTEGER INTERFACE ISSET LBRACE LCOR LE LIST LPAREN LT MINUS MOD MOD_ASSIGNMENT MULTIPLE_COMMENT MULTIPLICATION_ASSIGNMENT NAMESPACE NEQ NEW NOT NOT_IDENTICAL NULL OBJECT OR PLUS PRINT PRIVATE PROTECTED PUBLIC PUNTOYCOMA QUESTION RBRACE RCOR REQUIRE REQUIRE_ONCE RETURN RPAREN SIMPLE_ASSIGNMENT SIMPLE_COMMENT STATIC STRING SUBTRACTION_ASSIGNMENT SWITCH THROW TIMES TRAIT TRUE TRY TUPLE UNSET USE VAR VARIABLE VERDADERO VOID WHILE YIELD\n    programa : statement programa\n             | statement \n    \n    statement : asignacion\n              | impresion\n              | expresion_aritmetica\n              | declarar_array\n              \n    \n    asignacion : VARIABLE SIMPLE_ASSIGNMENT expresion PUNTOYCOMA\n                \n    \n    impresion : ECHO expresiones \n              | ECHO\n    \n    expresiones : expresion \n                | expresion COMA expresiones\n    \n    expresion : STRING\n              | INTEGER \n              | FLOAT\n              | VARIABLE\n              | expresion_aritmetica\n    \n    expresion_aritmetica : expresion_aritmetica operador term\n                         | term\n    \n    term : term operador factor\n         | factor\n    \n    factor : LPAREN expresion_aritmetica RPAREN\n           | INTEGER\n           | FLOAT\n           | VARIABLE\n     \n    operador : PLUS \n            | MINUS\n            | TIMES\n            | DIVIDE\n            | MOD \n    \n    declarar_array :  VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN RPAREN\n                    | VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN\n                    | VARIABLE SIMPLE_ASSIGNMENT LCOR RCOR\n                    | VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR\n\n    \n    lista_elementos : empty\n                    | expresion\n                    | expresion COMA lista_elementos\n    empty :'
+_lr_signature = 'ABSTRACT ADDITION_ASSIGNMENT AND ARRAY AS BOOL BOOLEAN BREAK CALLABLE CASE CATCH CLASS CLONE COLON COMA CONCAT CONST CONTINUE DECLARE DECREMENT DEFAULT DIE DIVIDE DIVISION_ASSIGNMENT DO DOLAR ECHO ELSE ELSEIF EMPTY ENDFOR ENDFOREACH ENDIF ENDSWITCH ENDWHILE EQ EXIT EXTENDS FALSE FALSO FINAL FINALLY FLOAT FOR FOREACH FUNCTION GE GLOBAL GOTO GRAPH GT IDENTICAL IF IMPLEMENTS IN INCLUDE INCLUDE_ONCE INCREMENT INPUT INSTANCEOF INT INTEGER INTERFACE ISSET LAMBDA LBRACE LCOR LE LIST LPAREN LT MAP MINUS MOD MOD_ASSIGNMENT MULTIPLE_COMMENT MULTIPLICATION_ASSIGNMENT NAMESPACE NEQ NEW NOT NOT_IDENTICAL NULL OBJECT OR PLUS PRINT PRIVATE PROTECTED PUBLIC PUNTOYCOMA QUESTION QUEUE RBRACE RCOR REQUIRE REQUIRE_ONCE RETURN RPAREN SET SIMPLE_ASSIGNMENT SIMPLE_COMMENT STACK STATIC STRING SUBTRACTION_ASSIGNMENT SWITCH THROW TIMES TRAIT TRUE TRY TUPLE UNSET USE VAR VARIABLE VERDADERO VOID WHILE YIELD\n    parametros : VARIABLE\n               | VARIABLE COMA parametros\n    \n    cases : CASE expresion COLON programa\n          | CASE expresion COLON programa cases\n    \n    pares : STRING COLON expresion\n          | STRING COLON expresion COMA pares\n    \n    llamada_funcion : VARIABLE LPAREN parametros RPAREN\n    \n    statement : asignacion\n              | impresion\n              | solicitud_datos\n              | expresion_aritmetica\n              | declaracion_estructura\n              | condicion\n    \n    programa : statement programa\n             | statement\n    \n    impresion : ECHO expresiones PUNTOYCOMA\n              | ECHO PUNTOYCOMA\n    \n    expresiones : expresion\n                | expresion COMA expresiones\n    \n    solicitud_datos : VARIABLE SIMPLE_ASSIGNMENT INPUT LPAREN STRING RPAREN PUNTOYCOMA\n    \n    expresion_aritmetica : expresion_aritmetica operador term\n                         | term\n    \n    term : term operador factor\n         | factor\n    \n    factor : LPAREN expresion_aritmetica RPAREN\n           | INTEGER\n           | FLOAT\n           | VARIABLE\n    \n    operador : PLUS\n             | MINUS\n             | TIMES\n             | DIVIDE\n             | MOD\n    \n    condicion : IF LPAREN expresion RPAREN LBRACE programa RBRACE\n              | IF LPAREN expresion RPAREN LBRACE programa RBRACE ELSE LBRACE programa RBRACE\n    \n    asignacion : VARIABLE SIMPLE_ASSIGNMENT expresion PUNTOYCOMA\n    \n    declaracion_estructura : VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR PUNTOYCOMA\n                           | VARIABLE SIMPLE_ASSIGNMENT LCOR RCOR PUNTOYCOMA\n    \n    lista_elementos : expresion\n                    | expresion COMA lista_elementos\n    \n    declarar_cola : VARIABLE SIMPLE_ASSIGNMENT QUEUE LPAREN RPAREN\n    \n    declarar_pila : VARIABLE SIMPLE_ASSIGNMENT STACK LPAREN RPAREN\n    \n    declarar_mapa : VARIABLE SIMPLE_ASSIGNMENT MAP LPAREN RPAREN\n    \n    declarar_grafo : VARIABLE SIMPLE_ASSIGNMENT GRAPH LPAREN RPAREN\n    \n    declarar_conjunto : VARIABLE SIMPLE_ASSIGNMENT SET LPAREN RPAREN\n    \n    declarar_diccionario_valores : VARIABLE SIMPLE_ASSIGNMENT LBRACE pares RBRACE\n    \n    switch_case : SWITCH LPAREN expresion RPAREN LBRACE cases DEFAULT COLON programa RBRACE\n                | SWITCH LPAREN expresion RPAREN LBRACE cases RBRACE\n    \n    break : BREAK PUNTOYCOMA\n    \n    for_each : FOR LPAREN VARIABLE IN VARIABLE RPAREN LBRACE programa RBRACE\n    \n    do_while : DO LBRACE programa RBRACE WHILE LPAREN expresion RPAREN PUNTOYCOMA\n    \n    switch_case_default : SWITCH LPAREN expresion RPAREN LBRACE cases DEFAULT COLON programa RBRACE\n    \n    continue : CONTINUE PUNTOYCOMA\n    \n    funcion_parametros_opcionales : FUNCTION VARIABLE LPAREN parametros RPAREN LBRACE programa RBRACE\n                                  | FUNCTION VARIABLE LPAREN RPAREN LBRACE programa RBRACE\n    \n    funcion_lambda : VARIABLE SIMPLE_ASSIGNMENT LAMBDA LPAREN parametros RPAREN COLON expresion\n    \n    funcion_recursiva : FUNCTION VARIABLE LPAREN parametros RPAREN LBRACE llamada_funcion RBRACE\n    \n    funcion_con_retorno : FUNCTION VARIABLE LPAREN parametros RPAREN LBRACE RETURN expresion PUNTOYCOMA RBRACE\n    \n    funcion_multiples_retornos : FUNCTION VARIABLE LPAREN parametros RPAREN LBRACE RETURN LCOR expresiones RCOR PUNTOYCOMA RBRACE\n    \n    funcion_sobrecarga : FUNCTION VARIABLE LPAREN parametros RPAREN LBRACE programa RBRACE\n                       | FUNCTION VARIABLE LPAREN RPAREN LBRACE programa RBRACE\n    \n    expresion : STRING\n              | INTEGER\n              | FLOAT\n              | VARIABLE\n    empty :'
     
-_lr_action_items = {'VARIABLE':([0,2,3,4,5,6,7,8,9,10,11,12,13,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,31,32,35,36,37,38,39,40,41,45,46,48,49,50,],[7,7,-3,-4,-5,-6,-24,27,-18,31,-20,-22,-23,31,-25,-26,-27,-28,-29,27,-8,-10,-12,-13,-14,-15,-16,31,-24,-17,27,27,-19,-21,-7,27,-32,-11,-30,-33,27,-31,]),'ECHO':([0,2,3,4,5,6,7,8,9,11,12,13,22,23,24,25,26,27,28,31,32,37,38,39,41,45,46,48,50,],[8,8,-3,-4,-5,-6,-24,-9,-18,-20,-22,-23,-8,-10,-12,-13,-14,-15,-16,-24,-17,-19,-21,-7,-32,-11,-30,-33,-31,]),'LPAREN':([0,2,3,4,5,6,7,8,9,10,11,12,13,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,31,32,34,35,36,37,38,39,40,41,45,46,48,49,50,],[10,10,-3,-4,-5,-6,-24,10,-18,10,-20,-22,-23,10,-25,-26,-27,-28,-29,10,-8,-10,-12,-13,-14,-15,-16,10,-24,-17,40,10,10,-19,-21,-7,10,-32,-11,-30,-33,10,-31,]),'INTEGER':([0,2,3,4,5,6,7,8,9,10,11,12,13,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,31,32,35,36,37,38,39,40,41,45,46,48,49,50,],[12,12,-3,-4,-5,-6,-24,25,-18,12,-20,-22,-23,12,-25,-26,-27,-28,-29,25,-8,-10,-12,-13,-14,-15,-16,12,-24,-17,25,25,-19,-21,-7,25,-32,-11,-30,-33,25,-31,]),'FLOAT':([0,2,3,4,5,6,7,8,9,10,11,12,13,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,31,32,35,36,37,38,39,40,41,45,46,48,49,50,],[13,13,-3,-4,-5,-6,-24,26,-18,13,-20,-22,-23,13,-25,-26,-27,-28,-29,26,-8,-10,-12,-13,-14,-15,-16,13,-24,-17,26,26,-19,-21,-7,26,-32,-11,-30,-33,26,-31,]),'$end':([1,2,3,4,5,6,7,8,9,11,12,13,14,22,23,24,25,26,27,28,31,32,37,38,39,41,45,46,48,50,],[0,-2,-3,-4,-5,-6,-24,-9,-18,-20,-22,-23,-1,-8,-10,-12,-13,-14,-15,-16,-24,-17,-19,-21,-7,-32,-11,-30,-33,-31,]),'PLUS':([5,7,9,11,12,13,25,26,27,28,30,31,32,37,38,],[16,-24,16,-20,-22,-23,-22,-23,-24,16,16,-24,16,-19,-21,]),'MINUS':([5,7,9,11,12,13,25,26,27,28,30,31,32,37,38,],[17,-24,17,-20,-22,-23,-22,-23,-24,17,17,-24,17,-19,-21,]),'TIMES':([5,7,9,11,12,13,25,26,27,28,30,31,32,37,38,],[18,-24,18,-20,-22,-23,-22,-23,-24,18,18,-24,18,-19,-21,]),'DIVIDE':([5,7,9,11,12,13,25,26,27,28,30,31,32,37,38,],[19,-24,19,-20,-22,-23,-22,-23,-24,19,19,-24,19,-19,-21,]),'MOD':([5,7,9,11,12,13,25,26,27,28,30,31,32,37,38,],[20,-24,20,-20,-22,-23,-22,-23,-24,20,20,-24,20,-19,-21,]),'SIMPLE_ASSIGNMENT':([7,],[21,]),'STRING':([8,21,35,36,40,49,],[24,24,24,24,24,24,]),'COMA':([9,11,12,13,23,24,25,26,27,28,31,32,37,38,44,],[-18,-20,-22,-23,36,-12,-13,-14,-15,-16,-24,-17,-19,-21,49,]),'RPAREN':([9,11,12,13,24,25,26,27,28,30,31,32,37,38,40,43,44,47,49,51,],[-18,-20,-22,-23,-12,-13,-14,-15,-16,38,-24,-17,-19,-21,46,-34,-35,50,-37,-36,]),'PUNTOYCOMA':([9,11,12,13,24,25,26,27,28,31,32,33,37,38,],[-18,-20,-22,-23,-12,-13,-14,-15,-16,-24,-17,39,-19,-21,]),'RCOR':([9,11,12,13,24,25,26,27,28,31,32,35,37,38,42,43,44,49,51,],[-18,-20,-22,-23,-12,-13,-14,-15,-16,-24,-17,41,-19,-21,48,-34,-35,-37,-36,]),'ARRAY':([21,],[34,]),'LCOR':([21,],[35,]),}
+_lr_action_items = {'VARIABLE':([0,3,],[2,2,]),'$end':([1,2,4,],[0,-1,-2,]),'COMA':([2,],[3,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'programa':([0,2,],[1,14,]),'statement':([0,2,],[2,2,]),'asignacion':([0,2,],[3,3,]),'impresion':([0,2,],[4,4,]),'expresion_aritmetica':([0,2,8,10,21,35,36,40,49,],[5,5,28,30,28,28,28,28,28,]),'declarar_array':([0,2,],[6,6,]),'term':([0,2,8,10,15,21,35,36,40,49,],[9,9,9,9,32,9,9,9,9,9,]),'factor':([0,2,8,10,15,21,29,35,36,40,49,],[11,11,11,11,11,11,37,11,11,11,11,]),'operador':([5,9,28,30,32,],[15,29,15,15,29,]),'expresiones':([8,36,],[22,45,]),'expresion':([8,21,35,36,40,49,],[23,33,44,23,44,44,]),'lista_elementos':([35,40,49,],[42,47,51,]),'empty':([35,40,49,],[43,43,43,]),}
+_lr_goto_items = {'parametros':([0,3,],[1,4,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,42 +26,71 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> programa","S'",1,None,None,None),
-  ('programa -> statement programa','programa',2,'p_programa','main.py',8),
-  ('programa -> statement','programa',1,'p_programa','main.py',9),
-  ('statement -> asignacion','statement',1,'p_statement','main.py',14),
-  ('statement -> impresion','statement',1,'p_statement','main.py',15),
-  ('statement -> expresion_aritmetica','statement',1,'p_statement','main.py',16),
-  ('statement -> declarar_array','statement',1,'p_statement','main.py',17),
-  ('asignacion -> VARIABLE SIMPLE_ASSIGNMENT expresion PUNTOYCOMA','asignacion',4,'p_asignacion','main.py',23),
-  ('impresion -> ECHO expresiones','impresion',2,'p_impresion','main.py',33),
-  ('impresion -> ECHO','impresion',1,'p_impresion','main.py',34),
-  ('expresiones -> expresion','expresiones',1,'p_expresiones','main.py',44),
-  ('expresiones -> expresion COMA expresiones','expresiones',3,'p_expresiones','main.py',45),
-  ('expresion -> STRING','expresion',1,'p_expresion','main.py',56),
-  ('expresion -> INTEGER','expresion',1,'p_expresion','main.py',57),
-  ('expresion -> FLOAT','expresion',1,'p_expresion','main.py',58),
-  ('expresion -> VARIABLE','expresion',1,'p_expresion','main.py',59),
-  ('expresion -> expresion_aritmetica','expresion',1,'p_expresion','main.py',60),
-  ('expresion_aritmetica -> expresion_aritmetica operador term','expresion_aritmetica',3,'p_expresion_aritmetica','main.py',78),
-  ('expresion_aritmetica -> term','expresion_aritmetica',1,'p_expresion_aritmetica','main.py',79),
-  ('term -> term operador factor','term',3,'p_term','main.py',88),
-  ('term -> factor','term',1,'p_term','main.py',89),
-  ('factor -> LPAREN expresion_aritmetica RPAREN','factor',3,'p_factor','main.py',98),
-  ('factor -> INTEGER','factor',1,'p_factor','main.py',99),
-  ('factor -> FLOAT','factor',1,'p_factor','main.py',100),
-  ('factor -> VARIABLE','factor',1,'p_factor','main.py',101),
-  ('operador -> PLUS','operador',1,'p_operador','main.py',118),
-  ('operador -> MINUS','operador',1,'p_operador','main.py',119),
-  ('operador -> TIMES','operador',1,'p_operador','main.py',120),
-  ('operador -> DIVIDE','operador',1,'p_operador','main.py',121),
-  ('operador -> MOD','operador',1,'p_operador','main.py',122),
-  ('declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN RPAREN','declarar_array',5,'p_declarar_array','main.py',131),
-  ('declarar_array -> VARIABLE SIMPLE_ASSIGNMENT ARRAY LPAREN lista_elementos RPAREN','declarar_array',6,'p_declarar_array','main.py',132),
-  ('declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR RCOR','declarar_array',4,'p_declarar_array','main.py',133),
-  ('declarar_array -> VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR','declarar_array',5,'p_declarar_array','main.py',134),
-  ('lista_elementos -> empty','lista_elementos',1,'p_lista_elementos','main.py',144),
-  ('lista_elementos -> expresion','lista_elementos',1,'p_lista_elementos','main.py',145),
-  ('lista_elementos -> expresion COMA lista_elementos','lista_elementos',3,'p_lista_elementos','main.py',146),
-  ('empty -> <empty>','empty',0,'p_empty','main.py',171),
+  ("S' -> parametros","S'",1,None,None,None),
+  ('parametros -> VARIABLE','parametros',1,'p_parametros','main.py',12),
+  ('parametros -> VARIABLE COMA parametros','parametros',3,'p_parametros','main.py',13),
+  ('cases -> CASE expresion COLON programa','cases',4,'p_cases','main.py',22),
+  ('cases -> CASE expresion COLON programa cases','cases',5,'p_cases','main.py',23),
+  ('pares -> STRING COLON expresion','pares',3,'p_pares','main.py',32),
+  ('pares -> STRING COLON expresion COMA pares','pares',5,'p_pares','main.py',33),
+  ('llamada_funcion -> VARIABLE LPAREN parametros RPAREN','llamada_funcion',4,'p_llamada_funcion','main.py',42),
+  ('statement -> asignacion','statement',1,'p_statement','main.py',49),
+  ('statement -> impresion','statement',1,'p_statement','main.py',50),
+  ('statement -> solicitud_datos','statement',1,'p_statement','main.py',51),
+  ('statement -> expresion_aritmetica','statement',1,'p_statement','main.py',52),
+  ('statement -> declaracion_estructura','statement',1,'p_statement','main.py',53),
+  ('statement -> condicion','statement',1,'p_statement','main.py',54),
+  ('programa -> statement programa','programa',2,'p_programa','main.py',60),
+  ('programa -> statement','programa',1,'p_programa','main.py',61),
+  ('impresion -> ECHO expresiones PUNTOYCOMA','impresion',3,'p_impresion','main.py',74),
+  ('impresion -> ECHO PUNTOYCOMA','impresion',2,'p_impresion','main.py',75),
+  ('expresiones -> expresion','expresiones',1,'p_expresiones','main.py',84),
+  ('expresiones -> expresion COMA expresiones','expresiones',3,'p_expresiones','main.py',85),
+  ('solicitud_datos -> VARIABLE SIMPLE_ASSIGNMENT INPUT LPAREN STRING RPAREN PUNTOYCOMA','solicitud_datos',7,'p_solicitud_datos','main.py',96),
+  ('expresion_aritmetica -> expresion_aritmetica operador term','expresion_aritmetica',3,'p_expresion_aritmetica','main.py',108),
+  ('expresion_aritmetica -> term','expresion_aritmetica',1,'p_expresion_aritmetica','main.py',109),
+  ('term -> term operador factor','term',3,'p_term','main.py',132),
+  ('term -> factor','term',1,'p_term','main.py',133),
+  ('factor -> LPAREN expresion_aritmetica RPAREN','factor',3,'p_factor','main.py',142),
+  ('factor -> INTEGER','factor',1,'p_factor','main.py',143),
+  ('factor -> FLOAT','factor',1,'p_factor','main.py',144),
+  ('factor -> VARIABLE','factor',1,'p_factor','main.py',145),
+  ('operador -> PLUS','operador',1,'p_operador','main.py',161),
+  ('operador -> MINUS','operador',1,'p_operador','main.py',162),
+  ('operador -> TIMES','operador',1,'p_operador','main.py',163),
+  ('operador -> DIVIDE','operador',1,'p_operador','main.py',164),
+  ('operador -> MOD','operador',1,'p_operador','main.py',165),
+  ('condicion -> IF LPAREN expresion RPAREN LBRACE programa RBRACE','condicion',7,'p_condicion','main.py',172),
+  ('condicion -> IF LPAREN expresion RPAREN LBRACE programa RBRACE ELSE LBRACE programa RBRACE','condicion',11,'p_condicion','main.py',173),
+  ('asignacion -> VARIABLE SIMPLE_ASSIGNMENT expresion PUNTOYCOMA','asignacion',4,'p_asignacion','main.py',187),
+  ('declaracion_estructura -> VARIABLE SIMPLE_ASSIGNMENT LCOR lista_elementos RCOR PUNTOYCOMA','declaracion_estructura',6,'p_declaracion_estructura','main.py',198),
+  ('declaracion_estructura -> VARIABLE SIMPLE_ASSIGNMENT LCOR RCOR PUNTOYCOMA','declaracion_estructura',5,'p_declaracion_estructura','main.py',199),
+  ('lista_elementos -> expresion','lista_elementos',1,'p_lista_elementos','main.py',210),
+  ('lista_elementos -> expresion COMA lista_elementos','lista_elementos',3,'p_lista_elementos','main.py',211),
+  ('declarar_cola -> VARIABLE SIMPLE_ASSIGNMENT QUEUE LPAREN RPAREN','declarar_cola',5,'p_declarar_cola','main.py',224),
+  ('declarar_pila -> VARIABLE SIMPLE_ASSIGNMENT STACK LPAREN RPAREN','declarar_pila',5,'p_declarar_pila','main.py',233),
+  ('declarar_mapa -> VARIABLE SIMPLE_ASSIGNMENT MAP LPAREN RPAREN','declarar_mapa',5,'p_declarar_mapa','main.py',242),
+  ('declarar_grafo -> VARIABLE SIMPLE_ASSIGNMENT GRAPH LPAREN RPAREN','declarar_grafo',5,'p_declarar_grafo','main.py',251),
+  ('declarar_conjunto -> VARIABLE SIMPLE_ASSIGNMENT SET LPAREN RPAREN','declarar_conjunto',5,'p_declarar_conjunto','main.py',260),
+  ('declarar_diccionario_valores -> VARIABLE SIMPLE_ASSIGNMENT LBRACE pares RBRACE','declarar_diccionario_valores',5,'p_declarar_diccionario_valores','main.py',269),
+  ('switch_case -> SWITCH LPAREN expresion RPAREN LBRACE cases DEFAULT COLON programa RBRACE','switch_case',10,'p_switch_case','main.py',280),
+  ('switch_case -> SWITCH LPAREN expresion RPAREN LBRACE cases RBRACE','switch_case',7,'p_switch_case','main.py',281),
+  ('break -> BREAK PUNTOYCOMA','break',2,'p_break','main.py',292),
+  ('for_each -> FOR LPAREN VARIABLE IN VARIABLE RPAREN LBRACE programa RBRACE','for_each',9,'p_for_each','main.py',301),
+  ('do_while -> DO LBRACE programa RBRACE WHILE LPAREN expresion RPAREN PUNTOYCOMA','do_while',9,'p_do_while','main.py',310),
+  ('switch_case_default -> SWITCH LPAREN expresion RPAREN LBRACE cases DEFAULT COLON programa RBRACE','switch_case_default',10,'p_switch_case_default','main.py',321),
+  ('continue -> CONTINUE PUNTOYCOMA','continue',2,'p_continue','main.py',329),
+  ('funcion_parametros_opcionales -> FUNCTION VARIABLE LPAREN parametros RPAREN LBRACE programa RBRACE','funcion_parametros_opcionales',8,'p_funcion_parametros_opcionales','main.py',340),
+  ('funcion_parametros_opcionales -> FUNCTION VARIABLE LPAREN RPAREN LBRACE programa RBRACE','funcion_parametros_opcionales',7,'p_funcion_parametros_opcionales','main.py',341),
+  ('funcion_lambda -> VARIABLE SIMPLE_ASSIGNMENT LAMBDA LPAREN parametros RPAREN COLON expresion','funcion_lambda',8,'p_funcion_lambda','main.py',352),
+  ('funcion_recursiva -> FUNCTION VARIABLE LPAREN parametros RPAREN LBRACE llamada_funcion RBRACE','funcion_recursiva',8,'p_funcion_recursiva','main.py',360),
+  ('funcion_con_retorno -> FUNCTION VARIABLE LPAREN parametros RPAREN LBRACE RETURN expresion PUNTOYCOMA RBRACE','funcion_con_retorno',10,'p_funcion_con_retorno','main.py',368),
+  ('funcion_multiples_retornos -> FUNCTION VARIABLE LPAREN parametros RPAREN LBRACE RETURN LCOR expresiones RCOR PUNTOYCOMA RBRACE','funcion_multiples_retornos',12,'p_funcion_multiples_retornos','main.py',376),
+  ('funcion_sobrecarga -> FUNCTION VARIABLE LPAREN parametros RPAREN LBRACE programa RBRACE','funcion_sobrecarga',8,'p_funcion_sobrecarga','main.py',384),
+  ('funcion_sobrecarga -> FUNCTION VARIABLE LPAREN RPAREN LBRACE programa RBRACE','funcion_sobrecarga',7,'p_funcion_sobrecarga','main.py',385),
+  ('expresion -> STRING','expresion',1,'p_expresion','main.py',396),
+  ('expresion -> INTEGER','expresion',1,'p_expresion','main.py',397),
+  ('expresion -> FLOAT','expresion',1,'p_expresion','main.py',398),
+  ('expresion -> VARIABLE','expresion',1,'p_expresion','main.py',399),
+  ('empty -> <empty>','empty',0,'p_empty','main.py',419),
 ]

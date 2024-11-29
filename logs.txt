@@ -1,0 +1,81 @@
+11/28/2024, 20:46:37
+Entrada:
+$var = 0
+
+Salida:
+LexToken(VARIABLE,'$var',1,0)
+LexToken(SIMPLE_ASSIGNMENT,'=',1,5)
+LexToken(INTEGER,0,1,7)
+11/28/2024, 20:49:40
+Entrada:
+vdv
+
+Salida:
+LexToken(VARIABLE,'vdv',1,0)
+11/28/2024, 20:49:46
+Entrada:
+vdv
+
+Salida:
+LexToken(VARIABLE,'vdv',2,0)
+11/28/2024, 20:54:42
+Entrada:
+sdsd
+
+Salida:
+LexToken(VARIABLE,'sdsd',1,0)
+11/28/2024, 20:57:52
+Entrada:
+njj
+
+Salida:
+LexToken(VARIABLE,'njj',1,0)
+11/28/2024, 20:58:06
+Entrada:
+sf
+sfsf
+[
+2
+
+Salida:
+LexToken(VARIABLE,'sf',1,0)
+LexToken(VARIABLE,'sfsf',2,3)
+LexToken(LCOR,'[',3,8)
+LexToken(INTEGER,2,4,10)
+11/28/2024, 21:03:00
+Entrada:
+$va = 0
+
+Salida:
+LexToken(VARIABLE,'$va',1,0)
+LexToken(SIMPLE_ASSIGNMENT,'=',1,4)
+LexToken(INTEGER,0,1,6)
+11/28/2024, 21:03:11
+Entrada:
+$va = 0
+
+Salida:
+LexToken(VARIABLE,'$va',2,0)
+LexToken(SIMPLE_ASSIGNMENT,'=',2,4)
+LexToken(INTEGER,0,2,6)
+11/28/2024, 21:03:45
+Entrada:
+$va = 0
+
+
+Salida:
+LexToken(VARIABLE,'$va',3,0)
+LexToken(SIMPLE_ASSIGNMENT,'=',3,4)
+LexToken(INTEGER,0,3,6)
+11/28/2024, 21:05:47
+Entrada:
+$va = 0
+echo "hola"
+
+
+Salida:
+LexToken(VARIABLE,'$va',5,0)
+LexToken(SIMPLE_ASSIGNMENT,'=',5,4)
+LexToken(INTEGER,0,5,6)
+LexToken(ECHO,'echo',6,8)
+LexToken(VARIABLE,'hola',6,14)

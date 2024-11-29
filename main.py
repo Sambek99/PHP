@@ -422,7 +422,9 @@ def p_empty(p):
 # Construcción del parser
 
 parser = yacc.yacc(debug=True, write_tables=False)
-
+def getAnalizadorSintactico():
+    return yacc.yacc()
+'''
 # Bucle principal para probar el parser
 while True:
     try:
@@ -433,3 +435,4 @@ while True:
         continue
     result = parser.parse(s)
     print(result)
+'''
