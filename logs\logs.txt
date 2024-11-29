@@ -1,0 +1,24 @@
+11/28/2024, 21:40:39
+Entrada:
+$va = 0
+
+
+Salida:
+LexToken(VARIABLE,'$va',1,0)
+LexToken(SIMPLE_ASSIGNMENT,'=',1,4)
+LexToken(INTEGER,0,1,6)
+11/28/2024, 21:40:41
+Entrada:
+$va = 0
+
+
+Salida:
+11/28/2024, 21:40:43
+Entrada:
+$va = 0
+
+
+Salida:
+LexToken(VARIABLE,'$va',5,0)
+LexToken(SIMPLE_ASSIGNMENT,'=',5,4)
+LexToken(INTEGER,0,5,6)
